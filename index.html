@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penguin Project - Introduction</title>
+<link rel="stylesheet" href="style.css">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="logo">🐧 Penguin Project</div>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Introduction</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="proposal.html">Proposal Overview</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero" style="background-color:#ffdee9; color:#333;">
+    <h1>Spatio-Temporal Pattern Mining of Antarctic Penguin Populations</h1>
+    <p>Analyzing climate-driven population changes to support conservation efforts</p>
+</section>
+
+<section class="section">
+    <h2>Introduction</h2>
+    <p>Climate change is altering habitats and food availability in the Antarctic. Penguins, especially species like Adélie and Gentoo, are highly sensitive to changes in sea ice, snow cover, and temperature. Monitoring their populations can reveal underlying environmental shifts. This research focuses on using data mining techniques to detect patterns in penguin population changes over time and space. By integrating biological and climatic datasets, we can better predict future ecological outcomes. This information is critical for stakeholders in environmental management, including the British Antarctic Survey and international conservation groups. Satellite and on-ground observations provide rich data sources that can be analyzed dynamically. Our study emphasizes both scientific discovery and practical conservation implications. By visualizing spatio-temporal shifts, we aim to make these insights actionable for policy and research.</p>
+
+    <h3>Interactive Penguin Map</h3>
+    <div id="penguin-map" style="height: 400px;"></div>
+
+    <h3>Population Trend Chart</h3>
+    <div id="population-chart" style="height: 400px;"></div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Penguin Project | <a href="https://github.com/yourusername" target="_blank">GitHub Repo</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
