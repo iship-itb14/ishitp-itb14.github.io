@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penguin Project - Data Exploration</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ── Font overrides ── */
+  body {
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  h3, h4, .logo, nav li, .de-nav a, .stat-card .stat-label, .snapshot-label {
+    font-family: 'Manrope', sans-serif;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #fe10ab;
+  }
+
+  .hero p {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fe10ab;
+    opacity: 0.85;
+  }
+
+  .section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+  }
+
+  .de-block h3 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .de-block h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .stat-card .stat-val {
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+  }
+
+  .snapshot-table th {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  .snapshot-table td {
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+  }
+
+  figcaption.de-caption {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.82rem;
+    letter-spacing: 0.01em;
+  }
+
+  .text-slot {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+  }
+
+  .ethics-box h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Page-specific additions ── */
+
+  .de-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #fdd0ee;
+    padding-bottom: 0.75rem;
+  }
+
+  .de-nav a {
+    padding: 0.45rem 1.1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #fe10ab;
+    border: 1.5px solid #fe10ab;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .de-nav a:hover,
+  .de-nav a.active {
+    background: #fe10ab;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* ── Sub-sections ── */
+  .de-block {
+    margin-bottom: 3rem;
+  }
+
+  .de-block h3 {
+    color: #fe10ab;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    border-left: 4px solid #fe10ab;
+    padding-left: 0.75rem;
+  }
+
+  .de-block h4 {
+    color: #555;
+    font-size: 1rem;
+    margin: 1.25rem 0 0.4rem;
+  }
+
+  /* ── Image slots ── */
+  .img-slot {
+    width: 100%;
+    min-height: 260px;
+    background: #fff0fb;
+    border: 2px dashed #fd8fd4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fd8fd4;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 1rem 0 0.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .img-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: absolute;
+    top: 0; left: 0;
+    display: none; /* show when src is filled */
+  }
+
+  .img-slot span {
+    z-index: 1;
+  }
+
+  .img-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .img-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  figcaption.de-caption {
+    font-size: 0.82rem;
+    color: #888;
+    text-align: center;
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+
+  /* ── Before / After table ── */
+  .snapshot-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+
+  .snapshot-table th {
+    background: #fe10ab;
+    color: #fff;
+    padding: 0.55rem 0.9rem;
+    text-align: left;
+  }
+
+  .snapshot-table td {
+    padding: 0.5rem 0.9rem;
+    border-bottom: 1px solid #fdd0ee;
+    vertical-align: top;
+    font-family: monospace;
+    font-size: 0.82rem;
+  }
+
+  .snapshot-table tr:nth-child(even) td {
+    background: #fef5fc;
+  }
+
+  .snapshot-label {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .label-before { background: #fdd0ee; color: #c0396a; }
+  .label-after  { background: #d4f5e4; color: #1a7a47; }
+
+  /* ── Stats card grid ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .stat-card {
+    background: #fff0fb;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .stat-card .stat-val {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fe10ab;
+  }
+
+  .stat-card .stat-label {
+    font-size: 0.78rem;
+    color: #888;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Text placeholder ── */
+  .text-slot {
+    background: #fef5fc;
+    border-left: 3px solid #fd8fd4;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    color: #999;
+    font-style: italic;
+    font-size: 0.9rem;
+    margin: 0.75rem 0;
+  }
+
+  /* ── Ethics box ── */
+  .ethics-box {
+    background: #fef5fc;
+    border: 1.5px solid #fd8fd4;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .ethics-box h4 {
+    color: #fe10ab;
+    margin: 0 0 0.5rem;
+  }
+
+  /* ── Tab + Sidebar layout ── */
+  .de-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+  }
+
+  .de-sidebar {
+    width: 190px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 80px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    padding: 1.25rem 1rem;
+  }
+
+  .de-sidebar .sidebar-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ccc;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #fdd0ee;
+  }
+
+  .de-sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .de-sidebar nav a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 0.84rem;
+    color: #999;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+  }
+
+  .de-sidebar nav a:hover {
+    background: #fff0fb;
+    color: #fe10ab;
+    text-decoration: none;
+  }
+
+  .de-sidebar nav a.active {
+    background: #fff0fb;
+    color: #fe10ab;
+    font-weight: 700;
+    border-left: 3px solid #fe10ab;
+    border-radius: 0 8px 8px 0;
+    text-decoration: none;
+  }
+
+  .de-main {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 2.5rem 2rem;
+    min-width: 0;
+  }
+
+
+  /* ── Tab buttons ── */
+  .tab-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 8px 8px 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 0.84rem;
+    color: #999;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tab-btn:hover {
+    background: #fff0fb;
+    color: #fe10ab;
+  }
+
+  .tab-btn.active {
+    background: #fff0fb;
+    color: #fe10ab;
+    font-weight: 700;
+    border-left: 3px solid #fe10ab;
+  }
+
+  /* ── Tab panels ── */
+  .de-block {
+    display: none;
+    margin-bottom: 0;
+  }
+
+  .de-block.active {
+    display: block;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .de-layout { flex-direction: column; padding: 0 1rem; }
+    .de-sidebar { width: 100%; position: static; }
+    .de-sidebar nav { flex-direction: row; flex-wrap: wrap; }
+    .de-sidebar nav a.active { border-left: none; border-bottom: 2px solid #fe10ab; border-radius: 8px; }
+    .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="logo">🐧 Penguin Project</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Introduction</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="proposal.html">Proposal Overview</a></li>
+      <li><a href="dataexploration.html" class="active">Data Exploration</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" style="background-color:#ffdee9; color:#333;">
+  <h1>Data Exploration</h1>
+  <p>Collection · Cleaning · Statistical Analysis · Visualizations</p>
+</section>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<div class="de-layout">
+
+  <!-- Sidebar -->
+  <aside class="de-sidebar">
+    <div class="sidebar-title">Sections</div>
+    <nav>
+      <button class="tab-btn active" data-tab="data-collection">Data Collection</button>
+      <button class="tab-btn" data-tab="cleaning">Cleaning &amp; Preprocessing</button>
+      <button class="tab-btn" data-tab="statistics">Statistical Analysis</button>
+      <button class="tab-btn" data-tab="visualizations">Visualizations</button>
+      <button class="tab-btn" data-tab="before-after">Before / After</button>
+      <button class="tab-btn" data-tab="ethics">Ethics &amp; Limitations</button>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="de-main">
+
+  <!-- ─────────────────────────────────────────
+       1. DATA COLLECTION
+  ───────────────────────────────────────────── -->
+  <div class="de-block active" id="data-collection">
+    <h3>1. Data Collection</h3>
+
+    <h4>Source &amp; Method</h4>
+    <p class="text-slot">[ Describe the data source(s) used — e.g. MAPPPD API, GBIF, British Antarctic Survey, NSIDC sea-ice data — and how the data was fetched (API call, direct download, web scrape, etc.). ]</p>
+
+    <h4>Why This Source?</h4>
+    <p class="text-slot">[ Justify why this dataset is authoritative and relevant to the research questions. If a static download was used instead of a live API, explain why a live source was not feasible. ]</p>
+
+    <h4>Dataset Overview</h4>
+
+    <!-- Key-numbers strip -->
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Total Records</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Species</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Year Range</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Survey Sites</div></div>
+      <div class="stat-card"><div class="stat-val">—</div><div class="stat-label">Columns</div></div>
+    </div>
+
+    <figure>
+      <div class="img-slot"><span>[ Screenshot or visual of raw dataset / API response ]</span></div>
+      <figcaption class="de-caption">Figure 1 — Raw dataset snapshot as retrieved from the source.</figcaption>
+    </figure>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       2. CLEANING & PREPROCESSING
+  ───────────────────────────────────────────── -->
+  <div class="de-block" id="cleaning">
+    <h3>2. Cleaning &amp; Preprocessing</h3>
+
+    <h4>Missing Values</h4>
+    <p class="text-slot">[ Explain how missing values were identified and handled — imputation strategy, removal criteria, or forward-fill. Include counts. ]</p>
+
+    <h4>Duplicates &amp; Inconsistencies</h4>
+    <p class="text-slot">[ Describe duplicate detection logic (e.g. site_id + species + year + count_type) and how many rows were removed. ]</p>
+
+    <h4>Outlier Detection</h4>
+    <p class="text-slot">[ Describe the outlier method used (e.g. 3×IQR per species) and how many records were flagged. ]</p>
+
+    <figure>
+      <div class="img-slot"><span>[ Fig — Missing-values heatmap or bar chart (% missing per column) ]</span></div>
+      <figcaption class="de-caption">Figure 2 — Missing values per column in the raw dataset.</figcaption>
+    </figure>
+
+    <h4>Transformations Applied</h4>
+    <p class="text-slot">[ List transformations: log1p count, z-score normalisation, min-max scaling, decade feature, month imputation, vantage fill, etc. ]</p>
+
+    <h4>Dimensionality Reduction (PCA)</h4>
+    <p class="text-slot">[ Explain which features were included in PCA, how many components were retained, and what variance they capture. ]</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       3. STATISTICAL ANALYSIS
+  ───────────────────────────────────────────── -->
+  <div class="de-block" id="statistics">
+    <h3>3. Statistical Analysis</h3>
+
+    <h4>Summary Statistics</h4>
+    <p class="text-slot">[ Insert or describe the summary statistics table: mean, median, std, variance, skewness, kurtosis, min, max — per species. ]</p>
+
+    <figure>
+      <div class="img-slot"><span>[ Table or screenshot of summary_statistics.csv ]</span></div>
+      <figcaption class="de-caption">Figure 3 — Summary statistics per species (penguin_count).</figcaption>
+    </figure>
+
+    <h4>Correlation Analysis</h4>
+    <p class="text-slot">[ Describe inter-species correlation in annual totals. Note which pairs are positively / negatively correlated and what that might indicate ecologically. ]</p>
+
+    <h4>Kruskal-Wallis Test</h4>
+    <p class="text-slot">[ Report the H statistic and p-value. State whether the null hypothesis (all species have the same count distribution) is rejected, and what that means. ]</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       4. VISUALIZATIONS  (10 slots)
+  ───────────────────────────────────────────── -->
+  <div class="de-block" id="visualizations">
+    <h3>4. Visualizations</h3>
+
+    <!-- Row 1 -->
+    <div class="img-grid-2">
+      <figure>
+        <div class="img-slot"><span>[ Fig 1 — Missing Values Bar Chart ]</span></div>
+        <figcaption class="de-caption">Fig 1 — Missing values (%) per column. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: which columns had the most missingness and how it was handled. ]</em></figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot"><span>[ Fig 2 — Annual Population Trends ]</span></div>
+        <figcaption class="de-caption">Fig 2 — Annual population totals with linear trend lines (1979–2025). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: overall trajectory for each species over time. ]</em></figcaption>
+      </figure>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="img-grid-2" style="margin-top:1.5rem;">
+      <figure>
+        <div class="img-slot"><span>[ Fig 3 — Boxplot by Species ]</span></div>
+        <figcaption class="de-caption">Fig 3 — Survey count distribution per species, outliers as ×. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: spread and skew differences between species. ]</em></figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot"><span>[ Fig 4 — Log-Transformed Distributions ]</span></div>
+        <figcaption class="de-caption">Fig 4 — Histogram + KDE of log(1 + count) per species. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: how log transformation affects distributional shape. ]</em></figcaption>
+      </figure>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="img-grid-3" style="margin-top:1.5rem;">
+      <figure>
+        <div class="img-slot" style="min-height:200px;"><span>[ Fig 5 — QQ Plot: Gentoo ]</span></div>
+        <figcaption class="de-caption">Fig 5a — QQ Gentoo</figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot" style="min-height:200px;"><span>[ Fig 5 — QQ Plot: King ]</span></div>
+        <figcaption class="de-caption">Fig 5b — QQ King</figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot" style="min-height:200px;"><span>[ Fig 5 — QQ Plot: Macaroni ]</span></div>
+        <figcaption class="de-caption">Fig 5c — QQ Macaroni</figcaption>
+      </figure>
+    </div>
+    <p class="text-slot" style="margin-top:0.5rem;">[ Insight: QQ plots assess normality of log-count. Note deviations at tails and what they imply. ]</p>
+
+    <!-- Row 4 -->
+    <div class="img-grid-2" style="margin-top:1.5rem;">
+      <figure>
+        <div class="img-slot"><span>[ Fig 6 — Count Type Stacked Bar ]</span></div>
+        <figcaption class="de-caption">Fig 6 — Records by species and count type (nests / adults / chicks). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: which count types dominate and any data gaps. ]</em></figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot"><span>[ Fig 7 — Correlation Heatmap ]</span></div>
+        <figcaption class="de-caption">Fig 7 — Inter-species correlation on annual totals. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: which species co-vary and possible ecological reasons. ]</em></figcaption>
+      </figure>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="img-grid-2" style="margin-top:1.5rem;">
+      <figure>
+        <div class="img-slot"><span>[ Fig 8 — 5-Year Rolling Average ]</span></div>
+        <figcaption class="de-caption">Fig 8 — Smoothed population trends (5-yr rolling mean). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: long-term signal vs year-to-year noise. ]</em></figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot"><span>[ Fig 9 — Survey Site Map ]</span></div>
+        <figcaption class="de-caption">Fig 9 — Unique survey sites by species (lat/lon scatter). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: geographic coverage and species overlap. ]</em></figcaption>
+      </figure>
+    </div>
+
+    <!-- Row 6 — PCA + YoY -->
+    <div class="img-grid-2" style="margin-top:1.5rem;">
+      <figure>
+        <div class="img-slot"><span>[ Fig 10 — PCA Scatter ]</span></div>
+        <figcaption class="de-caption">Fig 10 — PCA of survey features, coloured by species. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: how well species cluster in reduced feature space. ]</em></figcaption>
+      </figure>
+      <figure>
+        <div class="img-slot"><span>[ Fig 11 — Year-over-Year % Change ]</span></div>
+        <figcaption class="de-caption">Fig 11 — Annual population growth rate (%). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: volatility, crash years, and recovery periods. ]</em></figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top:1rem; color:#aaa; font-style:italic; font-size:0.85rem;">Additional visualizations can be inserted above as the analysis matures.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       5. BEFORE / AFTER
+  ───────────────────────────────────────────── -->
+  <div class="de-block" id="before-after">
+    <h3>5. Before / After Data Quality</h3>
+
+    <figure>
+      <div class="img-slot"><span>[ Fig 12 — Before vs After grouped bar chart ]</span></div>
+      <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+    </figure>
+
+    <p class="text-slot" style="margin-top:1rem;">[ Narrative summary: how many rows were removed at each step and what the net effect on data quality was. ]</p>
+
+    <h4>Dataset Snapshot — Before Cleaning</h4>
+    <span class="snapshot-label label-before">BEFORE</span>
+    <div style="overflow-x:auto;">
+      <table class="snapshot-table">
+        <thead>
+          <tr>
+            <th>common_name</th><th>year</th><th>site_name</th>
+            <th>penguin_count</th><th>count_type</th><th>vantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="6" style="color:#bbb;font-style:italic;">[ Paste or screenshot raw rows here ]</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 style="margin-top:1.5rem;">Dataset Snapshot — After Cleaning</h4>
+    <span class="snapshot-label label-after">AFTER</span>
+    <div style="overflow-x:auto;">
+      <table class="snapshot-table">
+        <thead>
+          <tr>
+            <th>common_name</th><th>year</th><th>site_name</th>
+            <th>penguin_count</th><th>log_count</th><th>count_zscore</th><th>is_outlier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="7" style="color:#bbb;font-style:italic;">[ Paste or screenshot cleaned rows here ]</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────
+       6. ETHICS & LIMITATIONS
+  ───────────────────────────────────────────── -->
+  <div class="de-block" id="ethics">
+    <h3>6. Ethics, Bias &amp; Limitations</h3>
+
+    <div class="ethics-box">
+      <h4>Geographic Bias</h4>
+      <p class="text-slot">[ Reflect on whether survey sites are evenly distributed or concentrated around research stations, and how this may skew results. ]</p>
+
+      <h4>Temporal Coverage Gaps</h4>
+      <p class="text-slot">[ Note any years or species with sparse data and how that affects trend interpretation. ]</p>
+
+      <h4>Measurement Uncertainty</h4>
+      <p class="text-slot">[ Discuss quality flag levels in MAPPPD (1–5 accuracy scale) and whether low-accuracy records were kept or filtered. ]</p>
+
+      <h4>Species Scope</h4>
+      <p class="text-slot">[ Acknowledge that the analysis focuses on three species and may not generalise to all Antarctic penguins. ]</p>
+
+      <h4>Ethical Considerations</h4>
+      <p class="text-slot">[ Address data attribution (MAPPPD / APBP), open-access licensing, and responsible use of ecological data for conservation policy. ]</p>
+    </div>
+  </div>
+
+  </div><!-- end .de-main -->
+</div><!-- end .de-layout -->
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <p>&copy; 2026 Penguin Project | <a href="https://github.com/iship-itb14/ishitp-itb14.github.io" target="_blank">GitHub Repo</a></p>
+</footer>
+
+<script>
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.de-block');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+
+      // scroll main area to top on tab switch
+      document.querySelector('.de-main').scrollTop = 0;
+    });
+  });
+</script>
+</body>
+</html>

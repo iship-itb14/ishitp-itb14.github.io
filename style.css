@@ -1,10 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap');
+
 /*Global */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
     margin: 0;
     color: #333;
     line-height: 1.6;
     background-color: #f9f9f9;
+    letter-spacing: 0.01em;
 }
 
 a {
@@ -30,9 +34,11 @@ header {
 }
 
 header .logo {
+    font-family: 'Fraunces', Georgia, serif;
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 400;
     color: #ff69b4;
+    letter-spacing: -0.01em;
 }
 
 nav ul {
@@ -42,25 +48,38 @@ nav ul {
 }
 
 nav li {
-    font-weight: bold;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
 }
 
 /* Hero Section */
 .hero {
     background: url('images/penguin_banner.jpg') no-repeat center center/cover;
-    color: #fff;
+    color: #fe10ab;
     padding: 6rem 2rem;
     text-align: center;
 }
 
 .hero h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2.5rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 2.8rem;
     margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #fe10ab;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fe10ab;
+    opacity: 0.85;
 }
 
 /* Sections */
@@ -75,8 +94,23 @@ nav li {
 }
 
 .section h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
     color: #ff69b4;
     margin-bottom: 1.5rem;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.section h3 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.section h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
 }
 
 /* Figures */
@@ -91,7 +125,7 @@ nav li {
 /* Team */
 .team-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     max-width: 900px;
     margin: 0 auto;
@@ -120,9 +154,25 @@ nav li {
     margin-bottom: 1rem;
 }
 
+.team-member h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+}
+
+.team-member p {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+}
 
 .links a {
     margin: 0 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
 /* Footer */
@@ -133,7 +183,12 @@ footer {
     border-top: 1px solid #eee;
     color: #666;
     margin-top: 2rem;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
 }
+
 .tab-content {
     max-width: 1200px;
     margin: 2rem auto;
@@ -156,8 +211,7 @@ footer {
     height: auto;
     display: block;
     margin: 0 auto;
-  }
-
+}
 
 .section .team-container {
     display: grid !important;
