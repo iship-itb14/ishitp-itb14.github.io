@@ -1,0 +1,4 @@
+common_name,count,mean,median,std,var,skew,kurtosis,min,max
+gentoo penguin,1096,1532.43,927.0,1637.96,2682926.76,1.82,3.86,1.0,9648.0
+king penguin,11,1.27,1.0,0.47,0.22,1.19,-0.76,1.0,2.0
+macaroni penguin,67,53.7,4.0,121.9,14859.97,2.74,7.42,1.0,575.0
