@@ -531,7 +531,7 @@
     <h4>Outlier Detection</h4>
     <p class="text-slot">Removed invalid counts where penguin_count < 0.
     Flagged extreme values during EDA using boxplots and log transformation. (We did not blindly remove high values because large colonies can be legitimate; instead we inspected them via site-wise summaries.)</p>
-    <p class="text-slot">Outliers were examined using distribution analysis. The histogram above compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
+    <p class="text-slot">Outliers were examined using distribution analysis. The histogram compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
 
     <figure>
       <div class="img-slot"><span>[ Fig — Missing-values heatmap or bar chart (% missing per column) ]</span></div>
@@ -541,8 +541,7 @@
     <h4>Transformations Applied</h4>
     <p class="text-slot">Added log_count = log(1 + penguin_count) to reduce skew and make distributions/relationships easier to visualize and model.</p>
 
-    <h4>Dimensionality Reduction (PCA)</h4>
-    <p class="text-slot">[ Explain which features were included in PCA, how many components were retained, and what variance they capture. ]</p>
+    
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -578,8 +577,7 @@
     <h4>Correlation Analysis</h4>
     <p class="text-slot">Annual totals reveal a strong positive correlation between King and Macaroni penguins (r=0.918), suggesting they may respond similarly to environmental changes. In contrast, Gentoo penguins show no significant correlation with either species, indicating distinct population dynamics.</p>
 
-    <h4>Kruskal-Wallis Test</h4>
-    <p class="text-slot">[ Report the H statistic and p-value. State whether the null hypothesis (all species have the same count distribution) is rejected, and what that means. ]</p>
+    
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -606,12 +604,12 @@
     <div class="img-grid-2" style="margin-top:1.5rem;">
       <figure>
          <img src="images/sea_ice_extent_by_month.jpeg" alt="Antarctic Sea Ice Extent Trend 1979–2025" style="max-width:100%; height:auto;">
-        <figcaption class="de-caption">Fig 3 — Survey count distribution per species, outliers as ×. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: Shows seasonal and interannual variability, with general trends in ice extent. Peaks in austral winter, troughs in summer, highlighting long-term patterns and variability.
+        <figcaption class="de-caption">Fig 3 — Average Sea Ice Extent By Month <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: Shows seasonal and interannual variability, with general trends in ice extent. Peaks in austral winter, troughs in summer, highlighting long-term patterns and variability.
          </em></figcaption>
       </figure>
       <figure>
          <img src="images/sea_ice_Extent_rolling_month.jpeg" alt="Antarctic Sea Ice 12 Month Rolling Average" style="max-width:100%; height:auto;">
-        <figcaption class="de-caption">Fig 4 — Histogram + KDE of log(1 + count) per species. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: how log transformation affects distributional shape. ]</em></figcaption>
+        <figcaption class="de-caption">Fig 4 — 12 Month Rolling Average <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: The 12-month rolling average shows long-term variability in Antarctic sea ice extent, with relatively stable levels until the mid-2010s followed by a noticeable decline after 2016. Recent years show partial recovery but values remain lower than earlier historical peaks. ]</em></figcaption>
       </figure>
     </div>
 
