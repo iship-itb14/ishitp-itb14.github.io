@@ -642,10 +642,14 @@
   <div class="de-block" id="before-after">
     <h3>5. Before / After Data Quality</h3>
 
-    <figure>
-      <div class="img-slot"><span>[ Fig 12 — Before vs After grouped bar chart ]</span></div>
-      <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
-    </figure>
+   <figure style="margin-bottom: 2rem;">
+  <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
+    <img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig12_before_after.png" 
+         alt="[ Fig 12 — Before vs After grouped bar chart ]" 
+         style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
+  </div>
+  <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+  </figure>
 
     <p class="text-slot" style="margin-top:1rem;">The raw 3-species dataset contained 1,707 rows with duplicates, zero counts, and pre-systematic-coverage records; after cleaning, 1,174 high-quality records remain with imputed months, flagged outliers, and derived features including log count, decade, and normalized scores.</p>
 
@@ -690,19 +694,19 @@
 
     <div class="ethics-box">
       <h4>Geographic Bias</h4>
-      <p class="text-slot">[ Reflect on whether survey sites are evenly distributed or concentrated around research stations, and how this may skew results. ]</p>
+      <p class="text-slot">Survey sites in the MAPPPD dataset are heavily concentrated around established research stations and accessible sub-Antarctic islands such as South Georgia, Kerguelen, and the Falklands — Gentoo's 1,096 records reflect this bias, while King penguin's 11 records highlight how remoter breeding sites remain largely unmonitored. This uneven coverage means population trends may better represent well-studied colonies than the species as a whole.</p>
 
       <h4>Temporal Coverage Gaps</h4>
-      <p class="text-slot">[ Note any years or species with sparse data and how that affects trend interpretation. ]</p>
+      <p class="text-slot">King penguin is severely underrepresented with only 11 clean records across the 1979–2025 window, making any trend interpretation for that species unreliable. Macaroni penguin coverage also thins considerably before the 1990s, which may distort long-term decline estimates if early baseline counts are missing.</p>
 
       <h4>Measurement Uncertainty</h4>
-      <p class="text-slot">[ Discuss quality flag levels in MAPPPD (1–5 accuracy scale) and whether low-accuracy records were kept or filtered. ]</p>
+      <p class="text-slot">MAPPPD's accuracy field (scale 1–5) was retained in the dataset but not used to filter records, meaning lower-confidence estimates from satellite or aerial surveys are weighted equally alongside precise ground counts. Future analysis should consider filtering to accuracy ≥ 3 or weighting records by accuracy to reduce noise in trend modeling.</p>
 
       <h4>Species Scope</h4>
-      <p class="text-slot">[ Acknowledge that the analysis focuses on three species and may not generalise to all Antarctic penguins. ]</p>
+      <p class="text-slot">This analysis covers only Gentoo, King, and Macaroni penguins, leaving out Adélie, Chinstrap, and Emperor species that are also present in the MAPPPD dataset and ecologically significant. Conclusions about Antarctic penguin population health cannot be generalised beyond these three species without expanding the dataset.</p>
 
       <h4>Ethical Considerations</h4>
-      <p class="text-slot">[ Address data attribution (MAPPPD / APBP), open-access licensing, and responsible use of ecological data for conservation policy. ]</p>
+      <p class="text-slot">Data is sourced from the Antarctic Penguin Biogeography Project (APBP) and distributed through MAPPPD under a CC-BY 4.0 open-access license, requiring attribution to Che-Castaldo, Humphries, and Lynch. This data directly informs CCAMLR conservation policy and krill fishing regulations, so responsible use means avoiding overstatement of trends given known data gaps, and ensuring any published findings credit the original field researchers whose decades of survey work underpin the dataset.</p>
     </div>
   </div>
 
