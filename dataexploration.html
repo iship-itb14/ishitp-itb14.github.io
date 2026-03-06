@@ -418,6 +418,29 @@
     .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
   }
+  /* ── Image visibility fix ── */
+.img-slot {
+  height: auto !important;
+  min-height: unset !important;
+  overflow: visible !important;
+  position: relative !important;
+  display: block !important;
+  padding: 0 !important;
+}
+
+.img-slot img {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: unset !important;
+}
+
+.img-slot span {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+}
 </style>
 </head>
 <body>
@@ -558,12 +581,12 @@
     <!-- Row 1 -->
     <div class="img-grid-2">
       <figure>
-        <div class="img-slot"><span>[ Fig 1 — Missing Values Bar Chart ]</span></div>
+        <div class="img-slot"><span><img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig01_missing_values.png"></span></div>
         <figcaption class="de-caption">Fig 1 — Missing values (%) per column. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: which columns had the most missingness and how it was handled. ]</em></figcaption>
       </figure>
       <figure>
-        <div class="img-slot"><span>[ Fig 2 — Annual Population Trends ]</span></div>
-        <figcaption class="de-caption">Fig 2 — Annual population totals with linear trend lines (1979–2025). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: overall trajectory for each species over time. ]</em></figcaption>
+        <div class="img-slot"><span><img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig04_log_distributions.png"></span></div>
+        <figcaption class="de-caption">Fig 2 — Log Transformed Count Distributions<br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: Species specific log count distributions ]</em></figcaption>
       </figure>
     </div>
 
@@ -624,7 +647,7 @@
     <!-- Row 6 — PCA + YoY -->
     <div class="img-grid-2" style="margin-top:1.5rem;">
       <figure>
-        <div class="img-slot"><span>[ Fig 10 — PCA Scatter ]</span></div>
+        <div class="img-slot"><span><img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig10_pca.png" alt="[ Fig 10 — PCA Scatter ]"></span></div>
         <figcaption class="de-caption">Fig 10 — PCA of survey features, coloured by species. <br><em class="text-slot" style="display:block;margin-top:0.3rem;">[ Insight: how well species cluster in reduced feature space. ]</em></figcaption>
       </figure>
       <figure>
