@@ -467,7 +467,7 @@
     <h3>1. Data Collection</h3>
 
     <h4>Source &amp; Method</h4>
-    <p class="text-slot">[ Describe the data source(s) used — e.g. MAPPPD API, GBIF, British Antarctic Survey, NSIDC sea-ice data — and how the data was fetched (API call, direct download, web scrape, etc.). ]</p>
+    <p class="text-slot">Population census records for Gentoo, King, and Macaroni penguins were sourced from MAPPPD (penguinmap.com), the world's only open-access Antarctic penguin database. Data was downloaded directly via the MAPPPD portal and loaded dynamically using a Python caching function that re-fetches from the live source when needed. </p>
     <p class="text-slot"> Antarctic Sea Ice Extent (Static) was sourced from the <strong>National Snow and Ice Data Center (NSIDC), NASA</strong>. The data is available at <a href="https://noaadata.apps.nsidc.org/NOAA/G02135/south/monthly/data/" target="_blank"> NSIDC Antarctic Sea Ice Monthly Data</a>.Data was directly downloaded as CSV files containing monthly sea ice area measurements from 1979 to 2025.</p>
 
     <h4>Why This Source?</h4>
@@ -497,7 +497,7 @@
     <h3>2. Cleaning &amp; Preprocessing</h3>
 
     <h4>Missing Values</h4>
-    <p class="text-slot">[ Explain how missing values were identified and handled — imputation strategy, removal criteria, or forward-fill. Include counts. ]</p>
+    <p class="text-slot">65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
 
     <h4>Duplicates &amp; Inconsistencies</h4>
     <p class="text-slot">[ Describe duplicate detection logic (e.g. site_id + species + year + count_type) and how many rows were removed. ]</p>
@@ -524,7 +524,7 @@
     <h3>3. Statistical Analysis</h3>
 
     <h4>Summary Statistics</h4>
-    <p class="text-slot">[ Insert or describe the summary statistics table: mean, median, std, variance, skewness, kurtosis, min, max — per species. ]</p>
+    <p class="text-slot">Gentoo dominates with 1,096 records and a mean count of 1,532 per survey, while King penguin has only 11 records — a significant imbalance worth noting. A Kruskal-Wallis test confirms the three species differ significantly in count distributions (H=187.66, p<0.0001), and annual totals show King and Macaroni are strongly correlated (r=0.918) while Gentoo behaves independently.</p>
 
     <figure>
       <div class="img-slot"><span>[ Table or screenshot of summary_statistics.csv ]</span></div>
@@ -635,7 +635,7 @@
       <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
     </figure>
 
-    <p class="text-slot" style="margin-top:1rem;">[ Narrative summary: how many rows were removed at each step and what the net effect on data quality was. ]</p>
+    <p class="text-slot" style="margin-top:1rem;">The raw 3-species dataset contained 1,707 rows with duplicates, zero counts, and pre-systematic-coverage records; after cleaning, 1,174 high-quality records remain with imputed months, flagged outliers, and derived features including log count, decade, and normalized scores.</p>
 
     <h4>Dataset Snapshot — Before Cleaning</h4>
     <span class="snapshot-label label-before">BEFORE</span>
