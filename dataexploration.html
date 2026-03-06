@@ -498,12 +498,15 @@
 
     <h4>Missing Values</h4>
     <p class="text-slot">65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
+    <p class="text-slot">The data cleaning impact chart above summarizes the preprocessing results. The dataset initially contained missing values which were removed during cleaning, resulting in a complete dataset with no remaining null entries. Duplicate records were also checked, and no significant duplicates remained after validation.</p>
 
     <h4>Duplicates &amp; Inconsistencies</h4>
     <p class="text-slot">[ Describe duplicate detection logic (e.g. site_id + species + year + count_type) and how many rows were removed. ]</p>
+    <p class="text-slot">Duplicate detection was performed using the core time variables (Year and Month) along with the measurement fields. As shown in the cleaning impact chart, the dataset contains only unique records after preprocessing, ensuring consistency for analysis.</p>
 
     <h4>Outlier Detection</h4>
     <p class="text-slot">[ Describe the outlier method used (e.g. 3×IQR per species) and how many records were flagged. ]</p>
+    <p class="text-slot">Outliers were examined using distribution analysis. The histogram above compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
 
     <figure>
       <div class="img-slot"><span>[ Fig — Missing-values heatmap or bar chart (% missing per column) ]</span></div>
@@ -530,6 +533,13 @@
       <div class="img-slot" style="width: 100%; max-width: 900px; margin: 0 auto;">
         <span><img src="images/summary_stats.png" alt="Summary Statistics"></span></div>
       <figcaption class="de-caption">Figure 3 — Summary statistics per species (penguin_count).</figcaption>
+    </figure>
+
+    <p class="text-slot">The Antarctic sea ice dataset contains 555 observations, with average Extent ≈ 11.48 million km² and Area ≈ 8.70 million km², showing moderate variability but relatively symmetric distributions (skewness near 0). The engineered features (Rolling_12, Log_Extent, and scaled values) stabilize variance and highlight longer-term trends and anomalies in sea ice extent over time.</p>
+
+    <figure>
+      <div class="img-slot"><span><img src="images/Stats_Summary_Sea_Ice.jpeg" alt="Summary Statistics"></span></div>
+      <figcaption class="de-caption">Figure 3 — Summary statistics per sea ice extent.</figcaption>
     </figure>
 
     <h4>Correlation Analysis</h4>
