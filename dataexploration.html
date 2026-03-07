@@ -526,6 +526,9 @@
 
     <h4>Missing Values</h4>
     <p class="text-slot"> <strong>Antarctic penguin population database</strong><br> 65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
+    <p class="text-slot"> <strong>Antarctic penguin population database</strong><br> Essential fields for analysis were: penguin_count, date, latitude_epsg_4326, longitude_epsg_4326.
+Rows missing any of these were removed, because they prevent time-series analysis, mapping, and count-based comparisons.
+The dataset has separate date columns (day, month, year). Some records had a missing day, so we imputed missing day with 1 to construct a valid date (documented assumption: day-of-month is not critical for our year/month level analysis).</p>
     <p class="text-slot"> <strong>Antarctic Sea Ice Extent (Static) </strong><br> The data cleaning impact chart above summarizes the preprocessing results. The dataset initially contained missing values which were removed during cleaning, resulting in a complete dataset with no remaining null entries. Duplicate records were also checked, and no significant duplicates remained after validation.</p>
     <p class="text-slot"> <strong>Climate Data Online (API) </strong> <br> The dataset is very comprehensive with no missing data. </p>
 
