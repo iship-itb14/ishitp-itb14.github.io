@@ -490,12 +490,16 @@
     <h3>1. Data Collection</h3>
 
     <h4>Source &amp; Method</h4>
-    <p class="text-slot">Population census records for Gentoo, King, and Macaroni penguins were sourced from MAPPPD (penguinmap.com), the world's only open-access Antarctic penguin database. Data was downloaded directly via the MAPPPD portal and loaded dynamically using a Python caching function that re-fetches from the live source when needed. </p>
-    <p class="text-slot"> Antarctic Sea Ice Extent (Static) was sourced from the <strong>National Snow and Ice Data Center (NSIDC), NASA</strong>. The data is available at <a href="https://noaadata.apps.nsidc.org/NOAA/G02135/south/monthly/data/" target="_blank"> NSIDC Antarctic Sea Ice Monthly Data</a>.Data was directly downloaded as CSV files containing monthly sea ice area measurements from 1979 to 2025.</p>
+    <p class="text-slot"><strong>British Antarctic Survey (API)</strong> - Population census records for Gentoo, King, and Macaroni penguins were sourced from MAPPPD (penguinmap.com), the world's only open-access Antarctic penguin database. Data was downloaded directly via the MAPPPD portal and loaded dynamically using a Python caching function that re-fetches from the live source when needed. </p>
+    <p class="text-slot"> <strong>Antarctic Sea Ice Extent (Static) </strong> - Antarctic Sea Ice Extent (Static) was sourced from the <strong>National Snow and Ice Data Center (NSIDC), NASA</strong>. The data is available at <a href="https://noaadata.apps.nsidc.org/NOAA/G02135/south/monthly/data/" target="_blank"> NSIDC Antarctic Sea Ice Monthly Data</a>.Data was directly downloaded as CSV files containing monthly sea ice area measurements from 1979 to 2025.</p>
+    <p class="text-slot"> <strong>Climate Data Online (API) </strong> - Average temperature data was collected from the NOAA Climate Data Online (CDO) API. A personal NOAA API token was obtained and included in the request header to authenticate API calls. Using Python and the requests library, a query was sent to the CDO endpoint specifying the dataset (GHCND), temperature datatype, location, and date range. The API returned the data in JSON format, which was then parsed and converted into a Pandas DataFrame for cleaning, aggregation, and analysis. </p>
+
 
     <h4>Why This Source?</h4>
     <p class="text-slot">[ Justify why this dataset is authoritative and relevant to the research questions. If a static download was used instead of a live API, explain why a live source was not feasible. ]</p>
-    <p class="text-slot"> NSIDC provides authoritative, well-maintained Antarctic sea ice datasets collected via satellite observations. This dataset is relevant to our research as it provides long-term temporal coverage (1979–2025) and high spatial resolution, enabling robust analysis of trends and variability in Antarctic sea ice extent.</p>
+    <p class="text-slot"> <strong>Antarctic Sea Ice Extent (Static) </strong> - NSIDC provides authoritative, well-maintained Antarctic sea ice datasets collected via satellite observations. This dataset is relevant to our research as it provides long-term temporal coverage (1979–2025) and high spatial resolution, enabling robust analysis of trends and variability in Antarctic sea ice extent.</p>
+    <p class="text-slot"> <strong> Climate Data Online (API) </strong> - The NOAA temperature dataset is relevant to the research questions because it provides reliable, long-term observational climate data collected from official monitoring stations. NOAA is a trusted scientific authority, ensuring the data is accurate, standardized, and consistently recorded over time. This allows for meaningful analysis of temperature trends, seasonal patterns, and climate variability, which are essential for investigating changes in climate conditions and answering the research questions related to temperature behavior over time.</p>
+
     <h4>Dataset Overview</h4>
 
     <!-- Key-numbers strip -->
@@ -520,16 +524,20 @@
     <h3>2. Cleaning &amp; Preprocessing</h3>
 
     <h4>Missing Values</h4>
-    <p class="text-slot">65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
-    <p class="text-slot">The data cleaning impact chart above summarizes the preprocessing results. The dataset initially contained missing values which were removed during cleaning, resulting in a complete dataset with no remaining null entries. Duplicate records were also checked, and no significant duplicates remained after validation.</p>
+    <p class="text-slot"> <strong>British Antarctic Survey (API)</strong><br> 65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
+    <p class="text-slot"> <strong>Antarctic Sea Ice Extent (Static) </strong><br> The data cleaning impact chart above summarizes the preprocessing results. The dataset initially contained missing values which were removed during cleaning, resulting in a complete dataset with no remaining null entries. Duplicate records were also checked, and no significant duplicates remained after validation.</p>
+    <p class="text-slot"> <strong>Climate Data Online (API) </strong> <br> The dataset is very comprehensive with no missing data. </p>
+
 
     <h4>Duplicates &amp; Inconsistencies</h4>
-    <p class="text-slot"> Standardize text fields (common_name, count_type, site_name, etc.) by removing whitespace and converting to lowercase to ensure that the same category is not treated as different.
+    <p class="text-slot"> <strong>British Antarctic Survey (API)</strong><br> Standardize text fields (common_name, count_type, site_name, etc.) by removing whitespace and converting to lowercase to ensure that the same category is not treated as different.
                           Eliminated duplicate rows using a reasonable key (site, species, date, count_type, vantage, penguin_count, etc.) to ensure that aggregated results are not skewed by duplicate counts.</p>
-    <p class="text-slot">Duplicate detection was performed using the core time variables (Year and Month) along with the measurement fields. As shown in the cleaning impact chart, the dataset contains only unique records after preprocessing, ensuring consistency for analysis.</p>
+    <p class="text-slot"><strong>Antarctic Sea Ice Extent (Static) </strong> <br> Duplicate detection was performed using the core time variables (Year and Month) along with the measurement fields. As shown in the cleaning impact chart, the dataset contains only unique records after preprocessing, ensuring consistency for analysis.</p>
+    <p class="text-slot"><strong>Climate Data Online (API) </strong><br> Unnecessary columns such as datatype, station, attributes, and value were removed to retain only relevant variables. The temperature values were standardized using a z-score transformation to normalize the data and allow easier comparison across observations. Additionally, a temperature anomaly was calculated by subtracting the average temperature for each month from the observed temperature, which helps identify how much warmer or colder each observation is relative to the typical seasonal temperature. </p>
+
 
     <h4>Outlier Detection</h4>
-    <p class="text-slot">Removed invalid counts where penguin_count < 0.
+    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br> Removed invalid counts where penguin_count < 0.
     Flagged extreme values during EDA using boxplots and log transformation. (We did not blindly remove high values because large colonies can be legitimate; instead we inspected them via site-wise summaries.)</p>
     <p class="text-slot">Outliers were examined using distribution analysis. The histogram compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
 
@@ -551,31 +559,38 @@
     <h3>3. Statistical Analysis</h3>
 
     <h4>Summary Statistics</h4>
-    <p class="text-slot">Gentoo dominates with 1,096 records and a mean count of 1,532 per survey, while King penguin has only 11 records — a significant imbalance worth noting. A Kruskal-Wallis test confirms the three species differ significantly in count distributions (H=187.66, p<0.0001), and annual totals show King and Macaroni are strongly correlated (r=0.918) while Gentoo behaves independently.</p>
+    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br>Gentoo dominates with 1,096 records and a mean count of 1,532 per survey, while King penguin has only 11 records — a significant imbalance worth noting. A Kruskal-Wallis test confirms the three species differ significantly in count distributions (H=187.66, p<0.0001), and annual totals show King and Macaroni are strongly correlated (r=0.918) while Gentoo behaves independently.</p>
 
     <figure>
       <div class="img-slot" style="width: 100%; max-width: 900px; margin: 0 auto;">
         <span><img src="images/summary_stats.png" alt="Summary Statistics"></span></div>
-      <figcaption class="de-caption">Figure 3 — Summary statistics per species (penguin_count).</figcaption>
+      <figcaption class="de-caption">Figure 1 — Summary statistics per species (penguin_count).</figcaption>
     </figure>
 
-    <p class="text-slot">The cleaned dataset contains 2,494 records across three species (Adélie 1,330, Chinstrap 1,073, Emperor 91). For all species, the mean is much higher than the median, showing a strong right-skew due to a few very large colony counts (max up to 504,332). Data is mostly complete; only day has notable missingness (22.5%) and vantage has minor missingness (4.6%).</p>
+    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br> The cleaned dataset contains 2,494 records across three species (Adélie 1,330, Chinstrap 1,073, Emperor 91). For all species, the mean is much higher than the median, showing a strong right-skew due to a few very large colony counts (max up to 504,332). Data is mostly complete; only day has notable missingness (22.5%) and vantage has minor missingness (4.6%).</p>
 
     <figure>
       <div class="img-slot" style="width: 100%; max-width: 900px; margin: 0 auto;">
         <span><img src="images/Screenshot 2026-03-06 at 3.20.47 PM.png" alt="Summary Statistics"></span></div>
-      <figcaption class="de-caption">Figure 3 — Summary statistics per species (penguin_count).</figcaption>
+      <figcaption class="de-caption">Figure 2 — Summary statistics per species (penguin_count).</figcaption>
     </figure>
 
-    <p class="text-slot">The Antarctic sea ice dataset contains 555 observations, with average Extent ≈ 11.48 million km² and Area ≈ 8.70 million km², showing moderate variability but relatively symmetric distributions (skewness near 0). The engineered features (Rolling_12, Log_Extent, and scaled values) stabilize variance and highlight longer-term trends and anomalies in sea ice extent over time.</p>
+    <p class="text-slot"><strong>Antarctic Sea Ice Extent (Static)</strong><br>The Antarctic sea ice dataset contains 555 observations, with average Extent ≈ 11.48 million km² and Area ≈ 8.70 million km², showing moderate variability but relatively symmetric distributions (skewness near 0). The engineered features (Rolling_12, Log_Extent, and scaled values) stabilize variance and highlight longer-term trends and anomalies in sea ice extent over time.</p>
 
     <figure>
       <div class="img-slot"><span><img src="images/Stats_Summary_Sea_Ice.jpeg" alt="Summary Statistics"></span></div>
       <figcaption class="de-caption">Figure 3 — Summary statistics per sea ice extent.</figcaption>
     </figure>
 
+    <p class="text-slot"><strong>Climate Data Online (API) (API)</strong><br> The statistical summary provides descriptive statistics of temperature values grouped by month. The results show clear seasonal patterns in the data. Average temperatures are highest during the winter months (January, February, and December), with mean values around 0.8–1.46°C, while the coldest temperatures occur in the summer months (June–August), where the mean drops to approximately −9°C to −10°C. The standard deviation is larger during the colder months, indicating greater variability in temperature during that period. The minimum and maximum values also highlight extreme temperature observations, with the lowest recorded temperature reaching around −30.6°C in July and the highest reaching about 10.6°C in December. Overall, the summary demonstrates strong seasonal temperature variation throughout the year.</p>
+    <figure>
+      <div class="img-slot"><span><img src="images/Statistical Summary_Climate Data Online.png" alt="Summary Statistics"></span></div>
+      <figcaption class="de-caption">Figure 4 — Summary Statistics for average temperature in South Pole.</figcaption>
+    </figure>
+
+
     <h4>Correlation Analysis</h4>
-    <p class="text-slot">Annual totals reveal a strong positive correlation between King and Macaroni penguins (r=0.918), suggesting they may respond similarly to environmental changes. In contrast, Gentoo penguins show no significant correlation with either species, indicating distinct population dynamics.</p>
+    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br>Annual totals reveal a strong positive correlation between King and Macaroni penguins (r=0.918), suggesting they may respond similarly to environmental changes. In contrast, Gentoo penguins show no significant correlation with either species, indicating distinct population dynamics.</p>
 
     
   </div>
