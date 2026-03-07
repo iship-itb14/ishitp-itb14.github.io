@@ -682,7 +682,7 @@
       </figure>
     </div>
 
-    <p style="margin-top:1rem; color:#aaa; font-style:italic; font-size:0.85rem;">Additional visualizations can be inserted above as the analysis matures.</p>
+    <p style="margin-top:1rem; color:#aaa; font-style:italic; font-size:0.85rem;">Each dataset has generated 10 visualizations. However, on the website, we only show 11 visualizations in total for representation purpose.</p>
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -691,22 +691,26 @@
   <div class="de-block" id="before-after">
     <h3>5. Before / After Data Quality</h3>
 
-   <figure style="margin-bottom: 2rem;">
+    <h4>British Antarctic Survey</h4>
+    <figure style="margin-bottom: 2rem;">
   <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
     <img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig12_before_after.png" 
          alt="[ Fig 12 — Before vs After grouped bar chart ]" 
          style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
   </div>
-  <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+  <figcaption class="de-caption">Fig 1 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
   </figure>
+  <p class="text-slot" style="margin-top:1rem;">The raw 3-species dataset contained 1,707 rows with duplicates, zero counts, and pre-systematic-coverage records; after cleaning, 1,174 high-quality records remain with imputed months, flagged outliers, and derived features including log count, decade, and normalized scores.</p>
 
+
+  <h4>Antarctic Sea Ice Extent</h4>
   <figure style="margin-bottom: 2rem;">
   <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
     <img src="images/Sea_Ice_b4_After.jpeg" 
          alt="[ Fig 12 — Before vs After grouped bar chart ]" 
          style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
   </div>
-  <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+  <figcaption class="de-caption">Fig 2 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
   </figure>
 
   <figure style="margin-bottom: 2rem;">
@@ -715,52 +719,30 @@
          alt="[ Fig 12 — Before vs After grouped bar chart ]" 
          style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
   </div>
-  <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+  <figcaption class="de-caption">Fig 3 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
   </figure>
 
 
+  <h4>Antarctic Penguin Population Database</h4>
   <figure style="margin-bottom: 2rem;">
   <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
     <img src="images/Screenshot 2026-03-06 at 4.42.09 PM.png" 
          alt="[ Fig 12 — Before vs After grouped bar chart ]" 
          style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
   </div>
-  <figcaption class="de-caption">Fig 12 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
+  <figcaption class="de-caption">Fig 4 — Data quality comparison: total rows, missing counts, zero counts, duplicates, outliers flagged.</figcaption>
   </figure>
 
-    <p class="text-slot" style="margin-top:1rem;">The raw 3-species dataset contained 1,707 rows with duplicates, zero counts, and pre-systematic-coverage records; after cleaning, 1,174 high-quality records remain with imputed months, flagged outliers, and derived features including log count, decade, and normalized scores.</p>
-
-    <h4>Dataset Snapshot — Before Cleaning</h4>
-    <span class="snapshot-label label-before">BEFORE</span>
-    <div style="overflow-x:auto;">
-      <table class="snapshot-table">
-        <thead>
-          <tr>
-            <th>common_name</th><th>year</th><th>site_name</th>
-            <th>penguin_count</th><th>count_type</th><th>vantage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td colspan="6" style="color:#bbb;font-style:italic;">[ Paste or screenshot raw rows here ]</td></tr>
-        </tbody>
-      </table>
+  <h4>Climate Data Online</h4>
+  <figure style="margin-bottom: 2rem;">
+    <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
+      <img src="images/Linh_fig_structure_before_after.png" 
+           alt="[ Fig 12 — Before vs After Data Cleaning/Processing ]" 
+           style="position: static; display: block; width: 100%; height: auto; object-fit: unset;">
     </div>
-
-    <h4 style="margin-top:1.5rem;">Dataset Snapshot — After Cleaning</h4>
-    <span class="snapshot-label label-after">AFTER</span>
-    <div style="overflow-x:auto;">
-      <table class="snapshot-table">
-        <thead>
-          <tr>
-            <th>common_name</th><th>year</th><th>site_name</th>
-            <th>penguin_count</th><th>log_count</th><th>count_zscore</th><th>is_outlier</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td colspan="7" style="color:#bbb;font-style:italic;">[ Paste or screenshot cleaned rows here ]</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <figcaption class="de-caption">Fig 5 — This figure compares the dataset structure before and after preprocessing.</figcaption>
+    </figure>
+    <p class="text-slot" style="margin-top:1rem;">Several unnecessary columns were removed to simplify the dataset, and new derived features including temperature z-scores and monthly temperature anomalies were added to support further analysis.</p>
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -768,6 +750,8 @@
   ───────────────────────────────────────────── -->
   <div class="de-block" id="ethics">
     <h3>6. Ethics, Bias &amp; Limitations</h3>
+
+    <h4>British Antarctic Survey</h4>
 
     <div class="ethics-box">
       <h4>Geographic Bias</h4>
@@ -785,6 +769,16 @@
       <h4>Ethical Considerations</h4>
       <p class="text-slot">Data is sourced from the Antarctic Penguin Biogeography Project (APBP) and distributed through MAPPPD under a CC-BY 4.0 open-access license, requiring attribution to Che-Castaldo, Humphries, and Lynch. This data directly informs CCAMLR conservation policy and krill fishing regulations, so responsible use means avoiding overstatement of trends given known data gaps, and ensuring any published findings credit the original field researchers whose decades of survey work underpin the dataset.</p>
     </div>
+
+    <h4>Climate Data Online</h4>
+    <div class="ethics-box">
+      <h4>Geographic Bias</h4>
+      <p class="text-slot">The dataset represents temperature measurements from one specific monitoring stations in Antarctica - Base Esperanza station, which may not fully represent temperature conditions across the entire continent. Some regions have limited or no observational coverage, meaning the data may reflect conditions only in monitored areas rather than the entire Antarctic climate.</p>
+
+      <h4>Measurement and Instrument Limitations</h4>
+      <p class="text-slot">Temperature measurements rely on weather station instruments, which can be affected by calibration differences, equipment malfunctions, or environmental interference. Although NOAA applies quality control procedures, measurement errors may still occur and introduce minor inaccuracies in the dataset.</p>
+    </div>
+
   </div>
 
   </div><!-- end .de-main -->
