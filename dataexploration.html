@@ -512,10 +512,7 @@
       <div class="stat-card"><div class="stat-val">15</div><div class="stat-label">Columns</div></div>
     </div>
 
-    <figure>
-      <div class="img-slot"><span>[ Screenshot or visual of raw dataset / API response ]</span></div>
-      <figcaption class="de-caption">Figure 1 — Raw dataset snapshot as retrieved from the source.</figcaption>
-    </figure>
+    
   </div>
 
   <!-- ─────────────────────────────────────────
@@ -545,11 +542,7 @@ The dataset has separate date columns (day, month, year). Some records had a mis
     Flagged extreme values during EDA using boxplots and log transformation. (We did not blindly remove high values because large colonies can be legitimate; instead we inspected them via site-wise summaries.)</p>
     <p class="text-slot">Outliers were examined using distribution analysis. The histogram compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
 
-    <figure>
-      <div class="img-slot"><span>[ Fig — Missing-values heatmap or bar chart (% missing per column) ]</span></div>
-      <figcaption class="de-caption">Figure 2 — Missing values per column in the raw dataset.</figcaption>
-    </figure>
-
+    
     <h4>Transformations Applied</h4>
     <p class="text-slot">Added log_count = log(1 + penguin_count) to reduce skew and make distributions/relationships easier to visualize and model.</p>
 
