@@ -490,7 +490,7 @@
     <h3>1. Data Collection</h3>
 
     <h4>Source &amp; Method</h4>
-    <p class="text-slot"><strong>British Antarctic Survey (API)</strong> <br> Population census records for Gentoo, King, and Macaroni penguins were sourced from MAPPPD (penguinmap.com), the world's only open-access Antarctic penguin database. Data was downloaded directly via the MAPPPD portal and loaded dynamically using a Python caching function that re-fetches from the live source when needed. </p>
+    <p class="text-slot"><strong>Antarctic penguin population database</strong> <br> Population census records for Gentoo, King, and Macaroni penguins were sourced from MAPPPD (penguinmap.com), the world's only open-access Antarctic penguin database. Data was downloaded directly via the MAPPPD portal and loaded dynamically using a Python caching function that re-fetches from the live source when needed. </p>
     <p class="text-slot"><strong>Antarctic Sea Ice Extent (Static) </strong> <br> Antarctic Sea Ice Extent (Static) was sourced from the <strong>National Snow and Ice Data Center (NSIDC), NASA</strong>. The data is available at <a href="https://noaadata.apps.nsidc.org/NOAA/G02135/south/monthly/data/" target="_blank"> NSIDC Antarctic Sea Ice Monthly Data</a>.Data was directly downloaded as CSV files containing monthly sea ice area measurements from 1979 to 2025.</p>
     <p class="text-slot"><strong>Climate Data Online (API) </strong> <br> Average temperature data was collected from the NOAA Climate Data Online (CDO) API. A personal NOAA API token was obtained and included in the request header to authenticate API calls. Using Python and the requests library, a query was sent to the CDO endpoint specifying the dataset (GHCND), temperature datatype, location, and date range. The API returned the data in JSON format, which was then parsed and converted into a Pandas DataFrame for cleaning, aggregation, and analysis. </p>
 
@@ -524,20 +524,20 @@
     <h3>2. Cleaning &amp; Preprocessing</h3>
 
     <h4>Missing Values</h4>
-    <p class="text-slot"> <strong>British Antarctic Survey (API)</strong><br> 65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
+    <p class="text-slot"> <strong>Antarctic penguin population database</strong><br> 65 pre-1979 records were removed as MAPPPD systematic coverage only begins then, along with 2 missing counts, 28 zero-count entries, and 438 duplicate site-year records. Outlier detection using 3×IQR flagged 9 Gentoo and 13 Macaroni surveys as extreme values without removing them, preserving data integrity.</p>
     <p class="text-slot"> <strong>Antarctic Sea Ice Extent (Static) </strong><br> The data cleaning impact chart above summarizes the preprocessing results. The dataset initially contained missing values which were removed during cleaning, resulting in a complete dataset with no remaining null entries. Duplicate records were also checked, and no significant duplicates remained after validation.</p>
     <p class="text-slot"> <strong>Climate Data Online (API) </strong> <br> The dataset is very comprehensive with no missing data. </p>
 
 
     <h4>Duplicates &amp; Inconsistencies</h4>
-    <p class="text-slot"> <strong>British Antarctic Survey (API)</strong><br> Standardize text fields (common_name, count_type, site_name, etc.) by removing whitespace and converting to lowercase to ensure that the same category is not treated as different.
+    <p class="text-slot"> <strong>Antarctic penguin population database</strong><br> Standardize text fields (common_name, count_type, site_name, etc.) by removing whitespace and converting to lowercase to ensure that the same category is not treated as different.
                           Eliminated duplicate rows using a reasonable key (site, species, date, count_type, vantage, penguin_count, etc.) to ensure that aggregated results are not skewed by duplicate counts.</p>
     <p class="text-slot"><strong>Antarctic Sea Ice Extent (Static) </strong> <br> Duplicate detection was performed using the core time variables (Year and Month) along with the measurement fields. As shown in the cleaning impact chart, the dataset contains only unique records after preprocessing, ensuring consistency for analysis.</p>
     <p class="text-slot"><strong>Climate Data Online (API) </strong><br> Unnecessary columns such as datatype, station, attributes, and value were removed to retain only relevant variables. The temperature values were standardized using a z-score transformation to normalize the data and allow easier comparison across observations. Additionally, a temperature anomaly was calculated by subtracting the average temperature for each month from the observed temperature, which helps identify how much warmer or colder each observation is relative to the typical seasonal temperature. </p>
 
 
     <h4>Outlier Detection</h4>
-    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br> Removed invalid counts where penguin_count < 0.
+    <p class="text-slot"><strong>Antarctic penguin population database</strong><br> Removed invalid counts where penguin_count < 0.
     Flagged extreme values during EDA using boxplots and log transformation. (We did not blindly remove high values because large colonies can be legitimate; instead we inspected them via site-wise summaries.)</p>
     <p class="text-slot">Outliers were examined using distribution analysis. The histogram compares the sea ice extent distribution before and after cleaning. Since the distributions appear nearly identical, the cleaning process preserved the underlying data patterns while removing inconsistencies.</p>
 
@@ -559,7 +559,7 @@
     <h3>3. Statistical Analysis</h3>
 
     <h4>Summary Statistics</h4>
-    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br>Gentoo dominates with 1,096 records and a mean count of 1,532 per survey, while King penguin has only 11 records — a significant imbalance worth noting. A Kruskal-Wallis test confirms the three species differ significantly in count distributions (H=187.66, p<0.0001), and annual totals show King and Macaroni are strongly correlated (r=0.918) while Gentoo behaves independently.</p>
+    <p class="text-slot"><strong>Antarctic penguin population database</strong><br>Gentoo dominates with 1,096 records and a mean count of 1,532 per survey, while King penguin has only 11 records — a significant imbalance worth noting. A Kruskal-Wallis test confirms the three species differ significantly in count distributions (H=187.66, p<0.0001), and annual totals show King and Macaroni are strongly correlated (r=0.918) while Gentoo behaves independently.</p>
 
     <figure>
       <div class="img-slot" style="width: 100%; max-width: 900px; margin: 0 auto;">
@@ -567,7 +567,7 @@
       <figcaption class="de-caption">Figure 1 — Summary statistics per species (penguin_count).</figcaption>
     </figure>
 
-    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br> The cleaned dataset contains 2,494 records across three species (Adélie 1,330, Chinstrap 1,073, Emperor 91). For all species, the mean is much higher than the median, showing a strong right-skew due to a few very large colony counts (max up to 504,332). Data is mostly complete; only day has notable missingness (22.5%) and vantage has minor missingness (4.6%).</p>
+    <p class="text-slot"><strong>Antarctic penguin population database</strong><br> The cleaned dataset contains 2,494 records across three species (Adélie 1,330, Chinstrap 1,073, Emperor 91). For all species, the mean is much higher than the median, showing a strong right-skew due to a few very large colony counts (max up to 504,332). Data is mostly complete; only day has notable missingness (22.5%) and vantage has minor missingness (4.6%).</p>
 
     <figure>
       <div class="img-slot" style="width: 100%; max-width: 900px; margin: 0 auto;">
@@ -590,7 +590,7 @@
 
 
     <h4>Correlation Analysis</h4>
-    <p class="text-slot"><strong>British Antarctic Survey (API)</strong><br>Annual totals reveal a strong positive correlation between King and Macaroni penguins (r=0.918), suggesting they may respond similarly to environmental changes. In contrast, Gentoo penguins show no significant correlation with either species, indicating distinct population dynamics.</p>
+    <p class="text-slot"><strong>Antarctic penguin population database</strong><br>Annual totals reveal a strong positive correlation between King and Macaroni penguins (r=0.918), suggesting they may respond similarly to environmental changes. In contrast, Gentoo penguins show no significant correlation with either species, indicating distinct population dynamics.</p>
 
     
   </div>
@@ -605,13 +605,13 @@
     <div class="img-grid-2">
       <figure>
         <div class="img-slot"><span><img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig01_missing_values.png"></span></div>
-        <figcaption class="de-caption">Fig 1 — Missing values (%) per column (British Antarctic Survey) <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: Day and month columns had the highest missingness (38.9% and 27.8% respectively); month was imputed using breeding season norms by count type, while day was left as-is since it is not used in the analysis.</em></figcaption>
+        <figcaption class="de-caption">Fig 1 — Missing values (%) per column (Antarctic penguin population database) <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: Day and month columns had the highest missingness (38.9% and 27.8% respectively); month was imputed using breeding season norms by count type, while day was left as-is since it is not used in the analysis.</em></figcaption>
       </figure>
       <figure>
         <div class="img-slot">
           <img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig09_survey_locations.png" alt="Fig 2 — Unique Survey Sites">
         </div>
-        <figcaption class="de-caption">Fig 2 — Unique survey sites by species (lat/lon scatter) (British Antarctic Survey) . <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: Survey sites are heavily concentrated in the sub-Antarctic islands (South Georgia, Falklands, Kerguelen) with Gentoo covering the widest geographic spread, while King and Macaroni sites cluster in a narrower latitudinal band.</em></figcaption>
+        <figcaption class="de-caption">Fig 2 — Unique survey sites by species (lat/lon scatter) (Antarctic penguin population database) . <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: Survey sites are heavily concentrated in the sub-Antarctic islands (South Georgia, Falklands, Kerguelen) with Gentoo covering the widest geographic spread, while King and Macaroni sites cluster in a narrower latitudinal band.</em></figcaption>
       </figure>
     </div>
 
@@ -635,7 +635,7 @@
         <div class="img-slot">
           <img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig05_qq_plots.png" alt="[ Fig 5 — QQ Plots ]">
         </div>
-        <figcaption class="de-caption">Fig 5 — QQ plots assessing normality of log-count per species (British Antarctic Survey).</figcaption>
+        <figcaption class="de-caption">Fig 5 — QQ plots assessing normality of log-count per species (Antarctic penguin population database).</figcaption>
       </figure>
       <p class="text-slot" style="margin-top:0.5rem;">Insight: QQ plots assess normality of log-count. Note deviations at tails </p>
     </div>
@@ -673,7 +673,7 @@
     <div class="img-grid-2" style="margin-top:1.5rem;">
       <figure>
         <div class="img-slot"><span><img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig10_pca.png" alt="[ Fig 10 — PCA Scatter ]"></span></div>
-        <figcaption class="de-caption">Fig 10 — PCA of survey features, coloured by species (British Antarctic Survey). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: how well species cluster in reduced feature space.</em></figcaption>
+        <figcaption class="de-caption">Fig 10 — PCA of survey features, coloured by species (Antarctic penguin population database). <br><em class="text-slot" style="display:block;margin-top:0.3rem;">Insight: how well species cluster in reduced feature space.</em></figcaption>
       </figure>
       <figure>
         <div class="img-slot"><img src="images/Linh_fig3_anomalies.png" alt="[ Fig 11 — Monthly Temperature Anomalies Over Time (1979–Present) ]">
@@ -691,7 +691,7 @@
   <div class="de-block" id="before-after">
     <h3>5. Before / After Data Quality</h3>
 
-    <h4>British Antarctic Survey</h4>
+    <h4>Antarctic penguin population database</h4>
     <figure style="margin-bottom: 2rem;">
   <div class="img-slot" style="min-height: unset; height: auto; position: relative; overflow: visible; display: block;">
     <img src="DataCleaning_and_Preprocessing/Ishita_Penguin/Penguin_plots/fig12_before_after.png" 
@@ -751,7 +751,7 @@
   <div class="de-block" id="ethics">
     <h3>6. Ethics, Bias &amp; Limitations</h3>
 
-    <h4>British Antarctic Survey</h4>
+    <h4>Antarctic penguin population database</h4>
 
     <div class="ethics-box">
       <h4>Geographic Bias</h4>
