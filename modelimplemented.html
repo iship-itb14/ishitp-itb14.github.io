@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penguin Project - Model Implementated</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    h1, h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    h3, h4, .logo, nav li, .stat-card .stat-label, .model-card h4, .metric-table th {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: #fe10ab;
+    }
+
+    .hero p {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 300;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fe10ab;
+      opacity: 0.85;
+    }
+
+    .mi-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .mi-sidebar {
+      width: 210px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 80px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 1.25rem 1rem;
+    }
+
+    .mi-sidebar .sidebar-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ccc;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #fdd0ee;
+    }
+
+    .mi-main {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 2.5rem 2rem;
+      min-width: 0;
+    }
+
+    .tab-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      border-left: 3px solid transparent;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 500;
+      font-size: 0.84rem;
+      color: #999;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: #fff0fb;
+      color: #fe10ab;
+    }
+
+    .tab-btn.active {
+      background: #fff0fb;
+      color: #fe10ab;
+      font-weight: 700;
+      border-left: 3px solid #fe10ab;
+    }
+
+    .mi-block {
+      display: none;
+      margin-bottom: 0;
+    }
+
+    .mi-block.active {
+      display: block;
+    }
+
+    .mi-block h3 {
+      color: #fe10ab;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      border-left: 4px solid #fe10ab;
+      padding-left: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mi-block h4 {
+      color: #555;
+      font-size: 1rem;
+      margin: 1.25rem 0 0.5rem;
+      font-weight: 600;
+    }
+
+    .text-slot {
+      background: #fef5fc;
+      border-left: 3px solid #fd8fd4;
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      color: #444;
+      font-size: 0.95rem;
+      margin: 0.75rem 0;
+      line-height: 1.65;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .stat-card {
+      background: #fff0fb;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .stat-card .stat-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+      color: #fe10ab;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.78rem;
+      color: #888;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .model-card {
+      background: #fff;
+      border: 1.5px solid #fdd0ee;
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .model-card h4 {
+      color: #fe10ab;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .pill {
+      display: inline-block;
+      background: #fff0fb;
+      color: #fe10ab;
+      border: 1px solid #fd8fd4;
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .mini-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.1rem;
+      color: #444;
+      line-height: 1.65;
+    }
+
+    .mini-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    .metric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      font-size: 0.92rem;
+    }
+
+    .metric-table th {
+      background: #fe10ab;
+      color: #fff;
+      padding: 0.7rem 0.9rem;
+      text-align: left;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-table td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid #fdd0ee;
+      vertical-align: top;
+    }
+
+    .metric-table tr:nth-child(even) td {
+      background: #fef5fc;
+    }
+
+    .snapshot-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .snapshot-box {
+      border: 1.5px solid #fdd0ee;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .snapshot-head {
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .before-head {
+      background: #f39ac9;
+    }
+
+    .after-head {
+      background: #45b97c;
+    }
+
+    .snapshot-box pre {
+      margin: 0;
+      padding: 1rem;
+      font-size: 0.84rem;
+      overflow-x: auto;
+      background: #fff;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .highlight-box {
+      background: #fff0fb;
+      border: 1.5px solid #fd8fd4;
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      margin-top: 1rem;
+    }
+
+    .highlight-box h4 {
+      color: #fe10ab;
+      margin-top: 0;
+    }
+
+    .img-slot {
+      width: 100%;
+      min-height: 220px;
+      background: #fff0fb;
+      border: 2px dashed #fd8fd4;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fd8fd4;
+      font-size: 0.95rem;
+      font-style: italic;
+      margin: 1rem 0 0.5rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .mi-layout {
+        flex-direction: column;
+        padding: 0 1rem;
+      }
+
+      .mi-sidebar {
+        width: 100%;
+        position: static;
+      }
+
+      .model-grid,
+      .snapshot-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🐧 Penguin Project</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Introduction</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="proposal.html">Proposal Overview</a></li>
+        <li><a href="dataexploration.html">Data Exploration</a></li>
+        <li><a href="modelimplemented.html" class="active">Models Implemented</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" style="background-color:#ffdee9; color:#333;">
+    <h1>Model Implementation</h1>
+    <p>Frequent Pattern Mining · Classification · Clustering · Regression</p>
+  </section>
+
+  <div class="mi-layout">
+
+    <aside class="mi-sidebar">
+      <div class="sidebar-title">Sections</div>
+      <nav>
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="preprocessing">Climate Data Online</button>
+        <button class="tab-btn" data-tab="frequent-pattern">Antarctic Sea Ice Extent</button>
+        <button class="tab-btn" data-tab="classification">Antarctic Penguin Population Database</button>
+      </nav>
+    </aside>
+
+    <div class="mi-main">
+
+      <!-- OVERVIEW -->
+      <div class="mi-block active" id="overview">
+        <h3>Overview</h3>
+
+        <p class="text-slot">
+          This section presents the machine learning models implemented for our project. To satisfy the project requirement, we selected different models for each of our dataset: Frequent Pattern Mining, Classification, Clustering, and Regression. Each model was chosen based on the structure of the dataset, the type of question being answered, and the preprocessing steps required before training or analysis.
+        </p>
+
+        <div class="model-grid">
+          <div class="model-card">
+            <span class="pill">Frequent Pattern Mining</span>
+            <h4>Apriori / FP-Growth</h4>
+            <p>Used to identify recurring co-occurrence patterns in transformed categorical or binned observational records.</p>
+          </div>
+
+          <div class="model-card">
+            <span class="pill">Classification</span>
+            <h4>Decision Tree / SVM</h4>
+            <p>Used to classify observations such as species category, anomaly class, or environmental grouping based on engineered features.</p>
+          </div>
+
+          <div class="model-card">
+            <span class="pill">Clustering</span>
+            <h4>K-Means / DBSCAN</h4>
+            <p>Used to discover natural groupings in the data without labels, especially after feature scaling and dimensionality reduction.</p>
+          </div>
+
+          <div class="model-card">
+            <span class="pill">Regression</span>
+            <h4>Linear Regression</h4>
+            <p>Used to model and predict continuous outcomes such as temperature or count-related trends from numerical predictors.</p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h4>How to use this page</h4>
+          <p>
+            For each model, we describe why it was chosen, what assumptions it makes, how hyperparameters were tuned, what challenges arose during implementation, and how performance was evaluated. Click on any section on the side to explore model implemented for each dataset.
+          </p>
+        </div>
+      </div>
+
+      <!-- Climate Data Online -->
+      <div class="mi-block" id="preprocessing">
+        <h3>Climate Data Online</h3>
+
+        <p class="text-slot">
+          Different machine learning models require different input formats. Before training our models, we transformed the datasets to match model requirements. Numerical scaling, encoding categorical variables, feature engineering, and binning continuous values were applied where necessary.
+        </p>
+
+        <h4>Model-Specific Transformation Notes</h4>
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Model Type</th>
+              <th>Requirement</th>
+              <th>Transformation Applied</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Frequent Pattern Mining</td>
+              <td>Transactional / categorical data</td>
+              <td>Converted selected variables into categorical bins and grouped them into transaction-like records.</td>
+            </tr>
+            <tr>
+              <td>Classification</td>
+              <td>Labeled target + numerical features</td>
+              <td>Encoded categorical values, selected target label, and split into training/testing sets.</td>
+            </tr>
+            <tr>
+              <td>Clustering</td>
+              <td>Numerical input with similar scale</td>
+              <td>Standardized continuous variables using scaling to avoid dominance by high-magnitude features.</td>
+            </tr>
+            <tr>
+              <td>Regression</td>
+              <td>Continuous target variable</td>
+              <td>Created lag features / trend features and removed rows with null values introduced by shifting.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Before-and-After Snapshot</h4>
+        <div class="snapshot-wrap">
+          <div class="snapshot-box">
+            <div class="snapshot-head before-head">Before Transformation</div>
+<pre>
+year | species  | penguin_count | month | temp_c | sea_ice_extent
+1985 | Gentoo   | 1520          | 1     | 0.9    | 11.4
+1986 | Macaroni | 830           | 2     | 1.2    | 10.8
+1987 | King     | 220           | 3     | -1.5   | 12.1
+</pre>
+          </div>
+
+          <div class="snapshot-box">
+            <div class="snapshot-head after-head">After Transformation</div>
+<pre>
+species_encoded | log_count | temp_zscore | extent_scaled | count_bin | target_class
+1               | 7.33      | 0.42        | -0.18         | High      | 1
+2               | 6.72      | 0.61        | -0.44         | Medium    | 0
+0               | 5.40      | -0.31       | 0.15          | Low       | 0
+</pre>
+          </div>
+        </div>
+
+        <div class="img-slot">
+          Insert screenshot here: before-and-after preprocessing snapshot from notebook / dataframe output
+        </div>
+      </div>
+
+      <!-- Antartica Sea Ice Extent -->
+      <div class="mi-block" id="frequent-pattern">
+        <h3>3. Frequent Pattern Mining</h3>
+
+        <div class="model-card">
+          <span class="pill">Suggested Model</span>
+          <h4>Apriori (or FP-Growth)</h4>
+
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> Frequent pattern mining is useful when the goal is to discover repeated relationships among categorical conditions, such as combinations of species, season, count range, or climate category.</li>
+            <li><strong>Dataset fit:</strong> Because our raw data is largely numerical and observational, we first converted selected features into categories or bins so that records could be treated like transactions.</li>
+            <li><strong>Model assumptions:</strong> The model assumes that meaningful co-occurrence patterns exist and that data has been transformed into an itemset/transaction structure.</li>
+            <li><strong>Hyperparameter tuning:</strong> Minimum support and minimum confidence were adjusted to balance too many trivial rules versus too few rules.</li>
+            <li><strong>Challenges & solutions:</strong> Continuous variables were not directly suitable, so we discretized them into interpretable bins such as low/medium/high temperature or count categories.</li>
+          </ul>
+        </div>
+
+        <h4>Evaluation Metrics</h4>
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+              <th>Your Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Support</td>
+              <td>How often an itemset appears in the dataset</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>Confidence</td>
+              <td>How often rule B occurs when A occurs</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>Lift</td>
+              <td>Strength of association beyond random chance</td>
+              <td>Replace with your value</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="img-slot">
+          Insert frequent pattern output here: association rules table or top itemsets figure
+        </div>
+      </div>
+
+      <!-- Antarctica Penguin Population Database -->
+      <div class="mi-block" id="classification">
+        <h3>4. Classification</h3>
+
+        <div class="model-card">
+          <span class="pill">Suggested Model</span>
+          <h4>Decision Tree Classifier</h4>
+
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> Decision Trees are easy to interpret and work well when the goal is to explain how features separate observations into classes.</li>
+            <li><strong>Dataset fit:</strong> This model is helpful when predicting a categorical outcome, such as species group, anomaly type, or class label derived from the data.</li>
+            <li><strong>Model assumptions:</strong> Decision Trees do not require linearity and can model nonlinear splits, though they may overfit if depth is not controlled.</li>
+            <li><strong>Hyperparameter tuning:</strong> We adjusted parameters such as <code>max_depth</code>, <code>min_samples_split</code>, and <code>min_samples_leaf</code> to improve generalization.</li>
+            <li><strong>Challenges & solutions:</strong> Some features needed encoding and class imbalance had to be monitored so one class did not dominate predictions.</li>
+          </ul>
+        </div>
+
+        <h4>Evaluation Metrics</h4>
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+              <th>Your Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Accuracy</td>
+              <td>Overall percentage of correct predictions</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>Precision</td>
+              <td>How many predicted positives were correct</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>Recall</td>
+              <td>How many actual positives were found</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>F1-score</td>
+              <td>Balance between precision and recall</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>ROC-AUC</td>
+              <td>Ability to separate classes across thresholds</td>
+              <td>Replace with your value</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="img-slot">
+          Insert classification figure here: confusion matrix, ROC curve, or feature importance chart
+        </div>
+      </div>
+
+      <!-- 5. CLUSTERING -->
+      <div class="mi-block" id="clustering">
+        <h3>5. Clustering</h3>
+
+        <div class="model-card">
+          <span class="pill">Suggested Model</span>
+          <h4>K-Means Clustering</h4>
+
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> K-Means is useful for identifying hidden structure in unlabeled data and grouping observations with similar feature values.</li>
+            <li><strong>Dataset fit:</strong> Our cleaned numerical variables can be grouped to explore whether environmental or biological observations naturally form clusters.</li>
+            <li><strong>Model assumptions:</strong> K-Means assumes compact, roughly spherical clusters and is sensitive to scale, so feature standardization is important.</li>
+            <li><strong>Hyperparameter tuning:</strong> We tested different values of <code>k</code> and used metrics such as silhouette score and visual inspection to choose the most meaningful cluster count.</li>
+            <li><strong>Challenges & solutions:</strong> Variables had different scales, so we applied standardization first. We also checked whether PCA helped improve interpretability in plots.</li>
+          </ul>
+        </div>
+
+        <h4>Evaluation Metrics</h4>
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+              <th>Your Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Silhouette Score</td>
+              <td>How well-separated the clusters are</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>Davies-Bouldin Index</td>
+              <td>Average similarity between clusters; lower is better</td>
+              <td>Replace with your value</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="img-slot">
+          Insert clustering figure here: PCA cluster plot, elbow curve, or cluster visualization
+        </div>
+      </div>
+
+      <!-- 6. REGRESSION -->
+      <div class="mi-block" id="regression">
+        <h3>6. Regression</h3>
+
+        <div class="model-card">
+          <span class="pill">Suggested Model</span>
+          <h4>Linear Regression</h4>
+
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> Linear Regression is appropriate when predicting a continuous target and establishing a baseline for how well input variables explain change in the outcome.</li>
+            <li><strong>Dataset fit:</strong> This model is well suited for numerical targets such as temperature, sea ice extent, or transformed penguin count trends.</li>
+            <li><strong>Model assumptions:</strong> Linear Regression assumes a linear relationship, independent errors, constant variance, and limited multicollinearity among predictors.</li>
+            <li><strong>Hyperparameter tuning:</strong> Basic Linear Regression has limited tuning, so improvement came mainly from feature engineering such as lag variables, scaling, or removing weak predictors.</li>
+            <li><strong>Challenges & solutions:</strong> Since the data has time-based structure, we created lag features and used a non-shuffled train/test split to preserve temporal order.</li>
+          </ul>
+        </div>
+
+        <h4>Evaluation Metrics</h4>
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Meaning</th>
+              <th>Your Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RMSE</td>
+              <td>Typical prediction error size</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>MSE</td>
+              <td>Average squared error</td>
+              <td>Replace with your value</td>
+            </tr>
+            <tr>
+              <td>R²-score</td>
+              <td>Proportion of variance explained by the model</td>
+              <td>Replace with your value</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="img-slot">
+          Insert regression figure here: actual vs predicted plot, residual plot, or trend forecast chart
+        </div>
+      </div>
+
+      <!-- 7. COMPARISON -->
+      <div class="mi-block" id="comparison">
+        <h3>7. Performance Comparison</h3>
+
+        <p class="text-slot">
+          After implementing the models, we compared their performance using metrics appropriate to each task type. Because each model solves a different kind of problem, the goal was not to compare raw metric values directly across categories, but to determine whether each chosen approach was effective for its intended analytical purpose.
+        </p>
+
+        <table class="metric-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Category</th>
+              <th>Main Metric(s)</th>
+              <th>Performance Summary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Apriori / FP-Growth</td>
+              <td>Frequent Pattern Mining</td>
+              <td>Support, Confidence, Lift</td>
+              <td>Replace with your interpretation</td>
+            </tr>
+            <tr>
+              <td>Decision Tree / SVM</td>
+              <td>Classification</td>
+              <td>Accuracy, F1, ROC-AUC</td>
+              <td>Replace with your interpretation</td>
+            </tr>
+            <tr>
+              <td>K-Means / DBSCAN</td>
+              <td>Clustering</td>
+              <td>Silhouette, Davies-Bouldin</td>
+              <td>Replace with your interpretation</td>
+            </tr>
+            <tr>
+              <td>Linear Regression</td>
+              <td>Regression</td>
+              <td>RMSE, MSE, R²</td>
+              <td>Replace with your interpretation</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="highlight-box">
+          <h4>Which approach worked best?</h4>
+          <p>
+            Replace this paragraph with your final conclusion. Example: <br><br>
+            <em>
+              Among the implemented models, the regression model performed best for our temperature dataset because the target variable was continuous and the lag-based features captured time-dependent structure effectively. The classification model was useful for categorical prediction, but its performance was limited by class imbalance. Clustering provided exploratory insight, while frequent pattern mining was most valuable for uncovering interpretable co-occurrence relationships rather than predictive performance.
+            </em>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Penguin Project | <a href="https://github.com/iship-itb14/ishitp-itb14.github.io" target="_blank">GitHub Repo</a></p>
+  </footer>
+
+  <script>
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.mi-block');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        document.querySelector('.mi-main').scrollTop = 0;
+      });
+    });
+  </script>
+</body>
+</html>
