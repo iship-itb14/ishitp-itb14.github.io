@@ -324,6 +324,64 @@
       padding: 1rem;
     }
 
+    .per-class-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+    }
+
+    .per-class-table th {
+      background: #fdd0ee;
+      color: #c0006e;
+      padding: 0.55rem 0.8rem;
+      text-align: left;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .per-class-table td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid #fdd0ee;
+    }
+
+    .per-class-table tr:nth-child(even) td {
+      background: #fef5fc;
+    }
+
+    .cluster-profile-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.75rem;
+      font-size: 0.88rem;
+    }
+
+    .cluster-profile-table th {
+      background: #fdd0ee;
+      color: #c0006e;
+      padding: 0.55rem 0.8rem;
+      text-align: left;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .cluster-profile-table td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid #fdd0ee;
+    }
+
+    .cluster-profile-table tr:nth-child(even) td {
+      background: #fef5fc;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 2px dashed #fdd0ee;
+      margin: 2rem 0;
+    }
+
     @media (max-width: 900px) {
       .mi-layout {
         flex-direction: column;
@@ -497,7 +555,7 @@
         </div>
         </ul>
     </div>
-
+      </div>
 
       <!-- Antartica Sea Ice Extent -->
       <div class="mi-block" id="frequent-pattern">
@@ -551,215 +609,221 @@
 
       <!-- Antarctica Penguin Population Database -->
       <div class="mi-block" id="classification">
-        <h3>4. Classification</h3>
-
-        <div class="model-card">
-          <span class="pill">Suggested Model</span>
-          <h4>Decision Tree Classifier</h4>
-
-          <ul class="mini-list">
-            <li><strong>Why this model was chosen:</strong> Decision Trees are easy to interpret and work well when the goal is to explain how features separate observations into classes.</li>
-            <li><strong>Dataset fit:</strong> This model is helpful when predicting a categorical outcome, such as species group, anomaly type, or class label derived from the data.</li>
-            <li><strong>Model assumptions:</strong> Decision Trees do not require linearity and can model nonlinear splits, though they may overfit if depth is not controlled.</li>
-            <li><strong>Hyperparameter tuning:</strong> We adjusted parameters such as <code>max_depth</code>, <code>min_samples_split</code>, and <code>min_samples_leaf</code> to improve generalization.</li>
-            <li><strong>Challenges & solutions:</strong> Some features needed encoding and class imbalance had to be monitored so one class did not dominate predictions.</li>
-          </ul>
-        </div>
-
-        <h4>Evaluation Metrics</h4>
-        <table class="metric-table">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Meaning</th>
-              <th>Your Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Accuracy</td>
-              <td>Overall percentage of correct predictions</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>Precision</td>
-              <td>How many predicted positives were correct</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>Recall</td>
-              <td>How many actual positives were found</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>F1-score</td>
-              <td>Balance between precision and recall</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>ROC-AUC</td>
-              <td>Ability to separate classes across thresholds</td>
-              <td>Replace with your value</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="img-slot">
-          Insert classification figure here: confusion matrix, ROC curve, or feature importance chart
-        </div>
-      </div>
-
-      <!-- 5. CLUSTERING -->
-      <div class="mi-block" id="clustering">
-        <h3>5. Clustering</h3>
-
-        <div class="model-card">
-          <span class="pill">Suggested Model</span>
-          <h4>K-Means Clustering</h4>
-
-          <ul class="mini-list">
-            <li><strong>Why this model was chosen:</strong> K-Means is useful for identifying hidden structure in unlabeled data and grouping observations with similar feature values.</li>
-            <li><strong>Dataset fit:</strong> Our cleaned numerical variables can be grouped to explore whether environmental or biological observations naturally form clusters.</li>
-            <li><strong>Model assumptions:</strong> K-Means assumes compact, roughly spherical clusters and is sensitive to scale, so feature standardization is important.</li>
-            <li><strong>Hyperparameter tuning:</strong> We tested different values of <code>k</code> and used metrics such as silhouette score and visual inspection to choose the most meaningful cluster count.</li>
-            <li><strong>Challenges & solutions:</strong> Variables had different scales, so we applied standardization first. We also checked whether PCA helped improve interpretability in plots.</li>
-          </ul>
-        </div>
-
-        <h4>Evaluation Metrics</h4>
-        <table class="metric-table">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Meaning</th>
-              <th>Your Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Silhouette Score</td>
-              <td>How well-separated the clusters are</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>Davies-Bouldin Index</td>
-              <td>Average similarity between clusters; lower is better</td>
-              <td>Replace with your value</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="img-slot">
-          Insert clustering figure here: PCA cluster plot, elbow curve, or cluster visualization
-        </div>
-      </div>
-
-      <!-- 6. REGRESSION -->
-      <div class="mi-block" id="regression">
-        <h3>6. Regression</h3>
-
-        <div class="model-card">
-          <span class="pill">Suggested Model</span>
-          <h4>Linear Regression</h4>
-
-          <ul class="mini-list">
-            <li><strong>Why this model was chosen:</strong> Linear Regression is appropriate when predicting a continuous target and establishing a baseline for how well input variables explain change in the outcome.</li>
-            <li><strong>Dataset fit:</strong> This model is well suited for numerical targets such as temperature, sea ice extent, or transformed penguin count trends.</li>
-            <li><strong>Model assumptions:</strong> Linear Regression assumes a linear relationship, independent errors, constant variance, and limited multicollinearity among predictors.</li>
-            <li><strong>Hyperparameter tuning:</strong> Basic Linear Regression has limited tuning, so improvement came mainly from feature engineering such as lag variables, scaling, or removing weak predictors.</li>
-            <li><strong>Challenges & solutions:</strong> Since the data has time-based structure, we created lag features and used a non-shuffled train/test split to preserve temporal order.</li>
-          </ul>
-        </div>
-
-        <h4>Evaluation Metrics</h4>
-        <table class="metric-table">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Meaning</th>
-              <th>Your Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>RMSE</td>
-              <td>Typical prediction error size</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>MSE</td>
-              <td>Average squared error</td>
-              <td>Replace with your value</td>
-            </tr>
-            <tr>
-              <td>R²-score</td>
-              <td>Proportion of variance explained by the model</td>
-              <td>Replace with your value</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="img-slot">
-          Insert regression figure here: actual vs predicted plot, residual plot, or trend forecast chart
-        </div>
-      </div>
-
-      <!-- 7. COMPARISON -->
-      <div class="mi-block" id="comparison">
-        <h3>7. Performance Comparison</h3>
+        <h3>Antarctic Penguin Population Database</h3>
 
         <p class="text-slot">
-          After implementing the models, we compared their performance using metrics appropriate to each task type. Because each model solves a different kind of problem, the goal was not to compare raw metric values directly across categories, but to determine whether each chosen approach was effective for its intended analytical purpose.
+          The MAPPPD (Mapping Application for Penguin Populations and Projected Dynamics) dataset contains 5,407 nest count records across 6 penguin species, 9 CCAMLR regions, and survey years spanning 1892 to 2025. Two models were applied to this dataset: a <strong>Random Forest Classifier</strong> to predict whether a colony is growing, stable, or declining, and <strong>K-Means Clustering</strong> to discover natural geographic and population-structure groupings without predefined labels.
         </p>
 
+        <!-- DATA TRANSFORMATION -->
+        <h4>Data Formatting and Transformation</h4>
+        <div class="model-card">
+          <p style="color:#444; font-size:0.93rem; line-height:1.65; margin-top:0;">
+            Because the raw dataset contains one row per survey visit, records were first filtered to <code>count_type = "nests"</code> for consistency (mixing nests, adults, and chicks inflates variance). Rows with missing <code>penguin_count</code> were dropped. Records were then aggregated to the colony level (one row per site and species combination), and a <strong>trend label</strong> was engineered by fitting a linear slope to each colony's count-over-time series. Colonies with a slope greater than +5% of mean count per year were labeled <em>Growing</em>, less than -5% were labeled <em>Declining</em>, and the rest <em>Stable</em>. Categorical features (species, CCAMLR region) were label-encoded for the classifier. For K-Means, all seven features were standardized using <code>StandardScaler</code> before clustering.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:0.75rem;">
+            <div class="snapshot-box" style="width:100%; box-sizing:border-box;">
+              <div class="snapshot-head before-head">Before: raw survey rows (sample)</div>
+              <pre style="overflow-x:auto; white-space:pre; margin:0; padding:1rem; font-size:0.82rem; line-height:1.5; box-sizing:border-box;">site_name    | common_name       | year | penguin_count | count_type
+-------------|-------------------|------|---------------|------------
+Acuna Island | adelie penguin    | 1993 |          2008 | nests
+Acuna Island | adelie penguin    | 1994 |          1920 | nests
+Acuna Island | chinstrap penguin | 2004 |          7716 | nests
+Cape Adare   | adelie penguin    | 1983 |        241272 | nests
+Cape Adare   | adelie penguin    | 1998 |        338777 | nests</pre>
+            </div>
+            <div class="snapshot-box" style="width:100%; box-sizing:border-box;">
+              <div class="snapshot-head after-head">After: colony-level features (sample)</div>
+              <pre style="overflow-x:auto; white-space:pre; margin:0; padding:1rem; font-size:0.82rem; line-height:1.5; box-sizing:border-box;">site_id | species_enc | region_enc | latitude | mean_count | trend_slope | trend
+--------|-------------|------------|----------|------------|-------------|--------
+ACUN    |           0 |          3 |   -60.76 |    2221.75 |       51.45 | Growing
+ADAR    |           0 |          8 |   -71.31 |  327437.90 |     7077.34 | Growing
+ADAM    |           0 |          5 |   -66.55 |     250.50 |       23.10 | Stable</pre>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- CLASSIFICATION -->
+        <h4>Classification: Random Forest Classifier</h4>
+
+        <div class="model-card">
+          <span class="pill">Classification</span>
+          <h4>Random Forest Classifier</h4>
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> Random Forest is an ensemble of decision trees that reduces overfitting by averaging predictions across many trees. It was chosen over a single Decision Tree because the colony trend labels (Declining / Stable / Growing) are heavily imbalanced. Stable colonies make up around 78% of the dataset, and Random Forest handles this more robustly through <code>class_weight="balanced"</code>. It also produces feature importance rankings, which directly answers our research question of which variables best predict population decline.</li>
+            <li><strong>Dataset fit:</strong> The target variable is a 3-class engineered trend label. Features include geographic coordinates, species, CCAMLR region, survey year span, and count statistics, which is a mixed numeric and categorical structure that Random Forest handles natively without requiring feature scaling.</li>
+            <li><strong>Model assumptions:</strong> Random Forest assumes that averaging many decorrelated trees reduces variance. It does not assume linearity, normality, or feature independence. It assumes the training set is representative of unseen colonies.</li>
+            <li><strong>Hyperparameter tuning:</strong> We used <code>GridSearchCV</code> with 5-fold stratified cross-validation optimizing for weighted F1-score, searching over <code>n_estimators</code> (100, 200), <code>max_depth</code> (None, 10, 20), and <code>min_samples_split</code> (2, 5). Best parameters found: <code>n_estimators=200</code>, <code>max_depth=None</code>, <code>min_samples_split=2</code>, <code>class_weight=balanced</code>. Best CV F1: <strong>0.7606</strong>.</li>
+            <li><strong>Challenges and solutions:</strong> Class imbalance was the primary challenge. Without correction the model would default to predicting Stable and still appear accurate. We addressed this with <code>class_weight="balanced"</code>, which up-weights minority class errors. Declining and Growing colonies still have lower per-class recall due to very small test support (8 and 6 samples respectively), which reflects data scarcity rather than a model flaw.</li>
+          </ul>
+        </div>
+
+        <h4>Classification: Evaluation Metrics</h4>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val">81.25%</div><div class="stat-label">Accuracy</div></div>
+          <div class="stat-card"><div class="stat-val">81.53%</div><div class="stat-label">Precision</div></div>
+          <div class="stat-card"><div class="stat-val">81.25%</div><div class="stat-label">Recall</div></div>
+          <div class="stat-card"><div class="stat-val">77.89%</div><div class="stat-label">F1-Score</div></div>
+          <div class="stat-card"><div class="stat-val">74.53%</div><div class="stat-label">ROC-AUC</div></div>
+        </div>
+
         <table class="metric-table">
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>Category</th>
-              <th>Main Metric(s)</th>
-              <th>Performance Summary</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Metric</th><th>Meaning</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Accuracy</td><td>Overall percentage of correct predictions</td><td><strong>81.25%</strong></td></tr>
+            <tr><td>Precision (weighted)</td><td>How many predicted positives were correct</td><td><strong>81.53%</strong></td></tr>
+            <tr><td>Recall (weighted)</td><td>How many actual positives were found</td><td><strong>81.25%</strong></td></tr>
+            <tr><td>F1-score (weighted)</td><td>Balance between precision and recall</td><td><strong>77.89%</strong></td></tr>
+            <tr><td>ROC-AUC (OvR, weighted)</td><td>Ability to separate classes across thresholds</td><td><strong>74.53%</strong></td></tr>
+          </tbody>
+        </table>
+
+        <h4>Per-Class Breakdown</h4>
+        <table class="per-class-table">
+          <thead><tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th><th>Support</th></tr></thead>
+          <tbody>
+            <tr><td>Declining</td><td>0.60</td><td>0.38</td><td>0.46</td><td>8</td></tr>
+            <tr><td>Growing</td><td>1.00</td><td>0.17</td><td>0.29</td><td>6</td></tr>
+            <tr><td>Stable</td><td>0.83</td><td>0.96</td><td>0.89</td><td>50</td></tr>
+          </tbody>
+        </table>
+
+        <div class="highlight-box">
+          <h4>Interpretation</h4>
+          <p>The model performs strongly on Stable colonies (F1 = 0.89), which are well-represented in the data. Growing colonies have perfect precision (1.00), meaning every colony the model predicts as growing actually is, but very low recall (0.17), meaning it misses most growing colonies. This reflects the extremely small minority class sample size (6 test instances) rather than a fundamental model failure. The data split was 189 training colonies and 64 test colonies using a 75/25 stratified split.</p>
+        </div>
+
+        <div style="width:100%; box-sizing:border-box; background:#fff0fb; border:2px dashed #fd8fd4; border-radius:10px; margin:1rem 0 0.5rem; padding:0.75rem; overflow:hidden;">
+          <img src="images/classification_results.png" style="display:block; width:100%; height:auto; border-radius:6px;" alt="Classification results">
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- CLUSTERING -->
+        <h4>Clustering: K-Means</h4>
+
+        <div class="model-card">
+          <span class="pill">Clustering</span>
+          <h4>K-Means Clustering</h4>
+          <ul class="mini-list">
+            <li><strong>Why this model was chosen:</strong> K-Means was chosen to discover whether penguin colonies naturally group into distinct regional or behavioral clusters without any predefined labels. This reveals geographic and population-structure patterns that exist independently of climate data, directly supporting our research question about which regions show shared resilience or decline.</li>
+            <li><strong>Dataset fit:</strong> Each colony is represented by 7 continuous features: latitude, longitude, mean count, count variability (std), population trend slope, survey year span, and number of surveys, making it suitable for distance-based clustering after scaling.</li>
+            <li><strong>Model assumptions:</strong> K-Means assumes clusters are roughly spherical and similar in size, and that Euclidean distance is a meaningful similarity measure. It is sensitive to outliers and requires <code>k</code> to be specified in advance, which we resolved using the elbow method and silhouette analysis.</li>
+            <li><strong>Hyperparameter tuning:</strong> We tested k = 2 through 9 with <code>n_init=10</code> to avoid local minima. Silhouette score peaked at k = 2 (0.8315) and the Davies-Bouldin Index was minimized at the same value (0.3419), making k = 2 the clear optimal choice.</li>
+            <li><strong>Challenges and solutions:</strong> Raw features have vastly different scales. <code>mean_count</code> ranges into the hundreds of thousands while <code>latitude</code> spans only about 15 degrees. Without <code>StandardScaler</code>, count magnitude would dominate the distance metric and geography would be ignored. Scaling resolved this. One cluster ended up with only 2 colonies, which reflects a genuine outlier group (very large Ross Sea mega-colonies) rather than a model flaw.</li>
+          </ul>
+        </div>
+
+        <h4>Clustering: Evaluation Metrics</h4>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val">0.8315</div><div class="stat-label">Silhouette Score</div></div>
+          <div class="stat-card"><div class="stat-val">0.3419</div><div class="stat-label">Davies-Bouldin Index</div></div>
+          <div class="stat-card"><div class="stat-val">2</div><div class="stat-label">Optimal k</div></div>
+          <div class="stat-card"><div class="stat-val">253</div><div class="stat-label">Colonies Clustered</div></div>
+        </div>
+
+        <table class="metric-table">
+          <thead><tr><th>Metric</th><th>Meaning</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>Silhouette Score</td><td>How well-separated and cohesive clusters are (1 = perfect)</td><td><strong>0.8315</strong></td></tr>
+            <tr><td>Davies-Bouldin Index</td><td>Average similarity between clusters (0 = perfect)</td><td><strong>0.3419</strong></td></tr>
+            <tr><td>Optimal k</td><td>Number of clusters selected by silhouette analysis</td><td><strong>2</strong></td></tr>
+          </tbody>
+        </table>
+
+        <h4>Cluster Profiles</h4>
+        <table class="cluster-profile-table">
+          <thead><tr><th>Cluster</th><th>Colonies</th><th>Avg Latitude</th><th>Avg Longitude</th><th>Avg Count</th><th>Avg Slope (trend)</th><th>Interpretation</th></tr></thead>
           <tbody>
             <tr>
-              <td>Apriori / FP-Growth</td>
-              <td>Frequent Pattern Mining</td>
-              <td>Support, Confidence, Lift</td>
-              <td>Replace with your interpretation</td>
+              <td><strong>Cluster 0</strong></td><td>2</td><td>-74.38</td><td>+169.72</td><td>250,219</td><td>+6,333</td>
+              <td>Ross Sea mega-colonies: very large, strongly growing</td>
             </tr>
             <tr>
-              <td>Decision Tree / SVM</td>
-              <td>Classification</td>
-              <td>Accuracy, F1, ROC-AUC</td>
-              <td>Replace with your interpretation</td>
-            </tr>
-            <tr>
-              <td>K-Means / DBSCAN</td>
-              <td>Clustering</td>
-              <td>Silhouette, Davies-Bouldin</td>
-              <td>Replace with your interpretation</td>
-            </tr>
-            <tr>
-              <td>Linear Regression</td>
-              <td>Regression</td>
-              <td>RMSE, MSE, R²</td>
-              <td>Replace with your interpretation</td>
+              <td><strong>Cluster 1</strong></td><td>251</td><td>-65.03</td><td>-21.28</td><td>6,551</td><td>+13</td>
+              <td>Peninsula and sub-Antarctic: small colonies, near-stable</td>
             </tr>
           </tbody>
         </table>
 
         <div class="highlight-box">
-          <h4>Which approach worked best?</h4>
+          <h4>Interpretation</h4>
+          <p>The clustering cleanly separates the two structurally distinct colony types in Antarctica. Cluster 0 captures the massive Ross Sea Adelie colonies (e.g., Cape Adare), which have counts orders of magnitude larger than any other site and strong positive growth slopes. Cluster 1 captures the broad majority of Antarctic Peninsula and sub-Antarctic colonies, which are far smaller and essentially stable in trend. This separation emerged purely from population structure and geography, with no species or region labels provided. The result aligns with the two major biogeographic zones in Antarctic penguin research.</p>
+        </div>
+
+        <div style="width:100%; box-sizing:border-box; background:#fff0fb; border:2px dashed #fd8fd4; border-radius:10px; margin:1rem 0 0.5rem; padding:0.75rem; overflow:hidden;">
+          <img src="images/clustering_results.png" style="display:block; width:100%; height:auto; border-radius:6px;" alt="K-Means Clustering Results">
+        </div>
+        <hr class="section-divider">
+
+        <!-- KEY FINDINGS -->
+        <h4>Key Findings from Both Models</h4>
+
+        <p class="text-slot">
+          Taken together, the classification and clustering models reveal that penguin population trends in Antarctica are <strong>not uniform</strong>. The answer to whether populations are declining depends entirely on which species and which region you examine.
+        </p>
+
+        <div class="model-grid">
+          <div class="model-card">
+            <span class="pill">Gentoo</span>
+            <h4>Clearly Growing</h4>
+            <p>16 of 68 colonies classified as Growing, only 3 as Declining. Post-2000 growth rate (+1,063 nests/yr) is nearly 5x the pre-2000 rate (+218/yr). Gentoo are a warm-water-tolerant species and appear to be benefiting from reduced sea ice.</p>
+          </div>
+          <div class="model-card">
+            <span class="pill">Chinstrap</span>
+            <h4>Most Colony-Level Decline</h4>
+            <p>18 of 78 colonies are Declining, the highest count of any species. Decline is concentrated in CCAMLR region 48.1 (South Shetland Islands and Antarctic Peninsula), where krill availability is under pressure.</p>
+          </div>
+          <div class="model-card">
+            <span class="pill">Adelie</span>
+            <h4>Split by Region</h4>
+            <p>Aggregate slope turned negative after 2000 (-8,048 nests/yr vs +13,705/yr before 2000). Ross Sea colonies continue to grow strongly while Peninsula colonies have been declining. The K-Means clusters capture exactly this geographic split.</p>
+          </div>
+          <div class="model-card">
+            <span class="pill">Macaroni</span>
+            <h4>Slight Overall Decline</h4>
+            <p>The only species with a negative aggregate slope (-0.82%/yr). Sample coverage is sparse (39 yearly observations), so this result should be treated as indicative rather than definitive.</p>
+          </div>
+          <div class="model-card">
+            <span class="pill">Emperor</span>
+            <h4>Insufficient Nest Data</h4>
+            <p>Emperor penguins have 330 total records but only 61 are nest counts, and only 1 colony (PGEO) had enough repeat nest surveys to compute a reliable trend slope. The species was present in the dataset but could not be meaningfully classified by the model. Their data is primarily recorded as adults and chicks rather than nests.</p>
+          </div>
+          <div class="model-card">
+            <span class="pill">King</span>
+            <h4>Insufficient Nest Data</h4>
+            <p>King penguins have only 13 total records in the dataset, of which just 1 is a nest count (2 nests at a single site in one year). This is far too sparse for any trend analysis. King penguins are primarily surveyed as adults. They are essentially absent from the MAPPPD nest-count coverage.</p>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h4>The 2000 Turning Point and What Location Predicts</h4>
           <p>
-            Replace this paragraph with your final conclusion. Example: <br><br>
-            <em>
-              Among the implemented models, the regression model performed best for our temperature dataset because the target variable was continuous and the lag-based features captured time-dependent structure effectively. The classification model was useful for categorical prediction, but its performance was limited by class imbalance. Clustering provided exploratory insight, while frequent pattern mining was most valuable for uncovering interpretable co-occurrence relationships rather than predictive performance.
-            </em>
+            For Adelie penguins, the aggregate trend reverses around the year 2000, shifting from strong growth to decline at the Peninsula level. This aligns with documented accelerated warming of the Antarctic Peninsula after 2000 and corresponding sea ice loss in that region. The clustering model discovered this same geographic divide implicitly: Cluster 0 (Ross Sea, deep south, growing) versus Cluster 1 (Peninsula, more northerly, stable to declining) is the spatial expression of the same pattern the 2000 breakpoint reveals in time.
+          </p>
+          <p>
+            The classification model further confirms that <strong>location (latitude and longitude) and species identity are the strongest predictors</strong> of whether a colony is declining or growing, outweighing survey frequency and colony size. This means the pressures driving decline are geographically structured, which strongly supports the hypothesis that regional sea ice and temperature changes are the underlying driver, rather than local or colony-specific factors.
+          </p>
+          <p style="margin-bottom:0;">
+            <strong>Note on data coverage:</strong> Emperor and King penguins could not be fully modeled because the MAPPPD dataset records them primarily as adults and chicks rather than nests. Future analysis incorporating adult-count trends for these species would give a more complete picture across all 6 species.
           </p>
         </div>
-      </div>
 
+        <div class="highlight-box">
+          <h4>The 2000 Turning Point and What Location Predicts</h4>
+          <p>
+            For Adelie penguins, the aggregate trend reverses around the year 2000, shifting from strong growth to decline at the Peninsula level. This aligns with documented accelerated warming of the Antarctic Peninsula after 2000 and corresponding sea ice loss in that region. The clustering model discovered this same geographic divide implicitly: Cluster 0 (Ross Sea, deep south, growing) versus Cluster 1 (Peninsula, more northerly, stable to declining) is the spatial expression of the same pattern the 2000 breakpoint reveals in time.
+          </p>
+          <p style="margin-bottom:0;">
+            The classification model further confirms that <strong>location (latitude and longitude) and species identity are the strongest predictors</strong> of whether a colony is declining or growing, outweighing survey frequency and colony size. This means the pressures driving decline are geographically structured, which strongly supports the hypothesis that regional sea ice and temperature changes are the underlying driver, rather than local or colony-specific factors.
+          </p>
+        </div>
+
+      </div>
+      <!-- end Antarctica Penguin Population Database -->
     </div>
   </div>
 
