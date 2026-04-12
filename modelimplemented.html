@@ -423,69 +423,81 @@
         <h3>Climate Data Online</h3>
 
         <p class="text-slot">
-          Different machine learning models require different input formats. Before training our models, we transformed the datasets to match model requirements. Numerical scaling, encoding categorical variables, feature engineering, and binning continuous values were applied where necessary.
+            Average temperature data was collected from the NOAA Climate Data Online (CDO) API. After cleaning, we have a time-series dataset on temperature in Celsius, as well as in z-score and anomaly. (image below)
+            <br><br>Linear Regression and Regression Trees were used to model the dataset because the data is time-series and exhibits temporal dependencies.
         </p>
 
-        <h4>Model-Specific Transformation Notes</h4>
-        <table class="metric-table">
-          <thead>
-            <tr>
-              <th>Model Type</th>
-              <th>Requirement</th>
-              <th>Transformation Applied</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Frequent Pattern Mining</td>
-              <td>Transactional / categorical data</td>
-              <td>Converted selected variables into categorical bins and grouped them into transaction-like records.</td>
-            </tr>
-            <tr>
-              <td>Classification</td>
-              <td>Labeled target + numerical features</td>
-              <td>Encoded categorical values, selected target label, and split into training/testing sets.</td>
-            </tr>
-            <tr>
-              <td>Clustering</td>
-              <td>Numerical input with similar scale</td>
-              <td>Standardized continuous variables using scaling to avoid dominance by high-magnitude features.</td>
-            </tr>
-            <tr>
-              <td>Regression</td>
-              <td>Continuous target variable</td>
-              <td>Created lag features / trend features and removed rows with null values introduced by shifting.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h4>Before-and-After Snapshot</h4>
-        <div class="snapshot-wrap">
-          <div class="snapshot-box">
-            <div class="snapshot-head before-head">Before Transformation</div>
-<pre>
-year | species  | penguin_count | month | temp_c | sea_ice_extent
-1985 | Gentoo   | 1520          | 1     | 0.9    | 11.4
-1986 | Macaroni | 830           | 2     | 1.2    | 10.8
-1987 | King     | 220           | 3     | -1.5   | 12.1
-</pre>
-          </div>
-
-          <div class="snapshot-box">
-            <div class="snapshot-head after-head">After Transformation</div>
-<pre>
-species_encoded | log_count | temp_zscore | extent_scaled | count_bin | target_class
-1               | 7.33      | 0.42        | -0.18         | High      | 1
-2               | 6.72      | 0.61        | -0.44         | Medium    | 0
-0               | 5.40      | -0.31       | 0.15          | Low       | 0
-</pre>
-          </div>
+        <div class="img-slot" style="width: 60%; margin: auto;"><span>
+            <img src="images/Linh - Dataset After cleaning.png" style="width: 100%;" alt="Dataset after cleaning"></span>
         </div>
 
-        <div class="img-slot">
-          Insert screenshot here: before-and-after preprocessing snapshot from notebook / dataframe output
+        <h4>Model Implementation</h4>
+        <div class="model-card">
+            <span class="pill">Linear Regression</span>
+            <ul class="mini-list">
+              <li><strong>Why Linear Regression was chosen</strong><p> Linear Regression provides a simple and interpretable baseline by modeling temperature as a linear combination of lagged features, making it effective for capturing general trends over time.</p></li>
+              <li><strong>Model assumptions:</strong><p>Linear Regression assumes a linear relationship between features and the target, independence of errors, constant variance, and low multicollinearity among predictors. In this dataset, these assumptions are only partially satisfied. The use of lag features introduces multicollinearity and temporal dependence, which violates some assumptions. However, Linear Regression still provides a useful baseline model for capturing short-term relationships in the data, despite these limitations.</p></li>
+              <li><strong>Hyperparameter tuning:</strong>
+                <p>For the Linear Regression model, hyperparameter tuning primarily focused on feature selection rather than traditional parameters, since Linear Regression has limited tunable hyperparameters. 
+                    <ul>
+                    <li>In the first attempt, we used short-term lag features (1-day, 2-day, and 3-day lags) to capture immediate temporal dependencies in temperature. However, this approach struggled to capture longer-term seasonal patterns.</li> 
+                    <li>In the second attempt, we expanded the feature set to include multi-scale lag variables (1-day, 7-day, 30-day, and 365-day lags), which significantly improved the model ability to capture both short-term fluctuations and long-term seasonality.</li></ul></p></li>
+              <li><strong>Challenges & solutions:</strong><p>One challenge we encountered was the introduction of missing values due to lagging, especially for larger lags like 365 days. This reduced the usable dataset size. To address this, we removed rows with missing lag values and ensured a consistent time index before modeling.</p></li>
+            </ul>
         </div>
-      </div>
+
+        <div class="model-card">
+            <span class="pill">Regression Tree</span>
+            <ul class="mini-list">
+              <li><strong>Why Regression Tree was chosen</strong><p>A Regression Tree was chosen as a complementary approach to Linear Regression because it can capture non-linear relationships in the data without requiring explicit feature transformations. Given that environmental variables such as temperature and penguin counts may have complex interactions and thresholds (e.g., sudden changes due to seasonal shifts), a tree-based model is well-suited to automatically discover these patterns. Unlike linear models, Regression Trees can split the data into regions based on feature values, making them effective for modeling both short-term fluctuations and irregular trends in time-series-like data.</p></li>
+              <li><strong>Model assumptions:</strong><p>Regression Trees assume that the data can be partitioned into meaningful regions where similar input values lead to similar outputs. Additionally, trees can be sensitive to small variations in the data, meaning that without proper control, they may overfit by creating overly complex splits that capture noise rather than true patterns.</p></li>
+              <li><strong>Hyperparameter tuning:</strong>
+                <p>The parameter I adjusted was max_depth, which limits how deep the tree can grow. We experimented with different depths and found that a moderate value (e.g., depth = 5) provided a good balance between capturing meaningful patterns and maintaining generalization.
+                </p></li>
+              <li><strong>Challenges & solutions:</strong><p>One of the main challenges encountered with Regression Trees was overfitting, especially when the tree was allowed to grow too deep. In early experiments, the model performed well on training data but poorly on test data, indicating that it was capturing noise rather than general patterns. This was addressed by limiting the tree depth and using a time-based train-test split (without shuffling) to better reflect real-world prediction scenarios.</p></li>
+            </ul>
+        </div>
+
+        <h4>Model Performance Evaluation</h4>
+        <div class="model-card">
+            <ul class="mini-list">
+              <li><strong>Evaluation Metrics</strong><p>To evaluate the performance of the Linear Regression and Regression Tree models, standard regression metrics were used, including Mean Squared Error (MSE) and the R² score. MSE measures the average squared difference between the predicted and actual temperature values, providing insight into the magnitude of prediction errors, with lower values indicating better performance. The R² score represents the proportion of variance in the target variable that is explained by the model, with values closer to 1 indicating a better fit. These metrics together provide a comprehensive understanding of both prediction accuracy and explanatory power of the models.</p>
+              <li><strong>Compare models performance</strong>
+                <ul>
+                    <li>Linear Regression</li>
+                    <p>Mean Squared Error: 12.135637890660698</p>
+                    <p>R squared 0.6957030785626751</p>
+                    <div class="img-slot" style="width: 60%; margin: auto;"><span>
+                        <img src="images/Linh - Linear Regression Performance.png" style="width: 100%;" alt="Linear Regression Performance"></span>
+                    </div>
+
+                    <li>Regression Tree</li>
+                    <p>Mean Squared Error: 12.494727508432408</p>
+                    <p>R squared 0.6866990306343723</p>
+                    <div class="img-slot" style="width: 60%; margin: auto;"><span>
+                        <img src="images/Linh - Regression Tree Perf.png" style="width: 100%;" alt="Regression Tree Performance"></span>
+                    </div>
+                </ul>
+            </li>
+              <li><strong>Which model performs better?</strong><p>Although the Regression Tree is capable of modeling non-linear relationships, Linear Regression performed better in this case due to the relatively stable and smooth temporal patterns in the dataset. The linear combination of lag features was sufficient to capture the main trends, while the Regression Tree may have overfit to noise in the training data, leading to reduced generalization performance.</p></li>
+            </ul>
+        </div>
+
+      <h4>Data Transformation</h4>
+      <div class="model-card">
+        <ul class="mini-list">
+          <li><p> To prepare the dataset for modeling, feature engineering was applied to capture the temporal dependencies inherent in time-series data. Specifically, lag features were created by shifting the temperature variable by multiple time steps (e.g., 1 day, 7 days, 30 days, and 365 days). These lag variables represent past temperature values and allow the models to use historical information to predict current temperature. By introducing these features, the original time-series dataset was transformed into a supervised learning format, where past observations serve as input variables and the current temperature is the target. This transformation enables traditional machine learning models, such as Linear Regression and Regression Trees, to effectively learn patterns over time, including short-term trends and long-term seasonal effects.</p></li>
+          <li><strong>Dataset Before</strong>
+            <div class="img-slot" style="width: 60%; margin: auto;"><span>
+                <img src="images/Linh - Dataset After cleaning.png" style="width: 100%;" alt="Dataset before transformation"></span>
+            </div>
+          <li><strong>Dataset After</strong></li>
+          <div class="img-slot" style="width: 60%; margin: auto;"><span>
+            <img src="images/Linh - Data Transformation.png" style="width: 100%;" alt="Dataset after transformation"></span>
+        </div>
+        </ul>
+    </div>
+
 
       <!-- Antartica Sea Ice Extent -->
       <div class="mi-block" id="frequent-pattern">
