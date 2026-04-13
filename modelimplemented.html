@@ -559,18 +559,19 @@
 
       <!-- Antartica Sea Ice Extent -->
       <div class="mi-block" id="frequent-pattern">
-        <h3>3. Frequent Pattern Mining</h3>
+        <h3>ANTARCTIC SEA ICE EXTENT</h3>
 
         <div class="model-card">
-          <span class="pill">Suggested Model</span>
-          <h4>Apriori (or FP-Growth)</h4>
+          
+          <h4>Random Forest Regression</h4>
 
           <ul class="mini-list">
-            <li><strong>Why this model was chosen:</strong> Frequent pattern mining is useful when the goal is to discover repeated relationships among categorical conditions, such as combinations of species, season, count range, or climate category.</li>
-            <li><strong>Dataset fit:</strong> Because our raw data is largely numerical and observational, we first converted selected features into categories or bins so that records could be treated like transactions.</li>
-            <li><strong>Model assumptions:</strong> The model assumes that meaningful co-occurrence patterns exist and that data has been transformed into an itemset/transaction structure.</li>
-            <li><strong>Hyperparameter tuning:</strong> Minimum support and minimum confidence were adjusted to balance too many trivial rules versus too few rules.</li>
-            <li><strong>Challenges & solutions:</strong> Continuous variables were not directly suitable, so we discretized them into interpretable bins such as low/medium/high temperature or count categories.</li>
+            <li><strong>Why this model was chosen:</strong> Random Forest Regression was chosen because it can effectively model non-linear relationships and handle complex interactions between features such as year and month. The dataset exhibits both long-term trends and seasonal variations, which are difficult for simple linear models to capture.</li>
+            <li><strong>Dataset fit:</strong> The dataset contains temporal (year) and seasonal (month) features with non-linear patterns. Random Forest is well-suited for such data as it does not assume linearity and can adapt to fluctuations and irregular patterns in sea ice extent.</li>
+            <li><strong>Model assumptions:</strong> Random Forest makes minimal assumptions about the data. It does not require linear relationships or normally distributed features, making it highly flexible for real-world environmental datasets with noise and variability.</li>
+            <li><strong>Hyperparameter tuning:</strong> The model was tuned by adjusting parameters such as the number of trees (n_estimators=200) and maximum depth (max_depth=10) to balance bias and variance. These settings improved prediction accuracy while preventing overfitting.</li>
+            <li><strong>Insight:</strong> The Random Forest model achieves a very high R² score of 0.99, indicating excellent predictive performance. The predicted values closely follow the actual trend, demonstrating the model’s ability to capture both long-term changes and seasonal variability in Antarctic sea ice extent.</li>
+            <li><strong>Challenges & solutions:</strong>One key challenge was the presence of incomplete data for the final year, which caused misleading trends in the visualization. This was resolved by filtering out years without complete 12-month data. Additionally, seasonal fluctuations introduced noise, which was handled by aggregating data at a yearly level for clearer trend visualization.</li>
           </ul>
         </div>
 
@@ -585,19 +586,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>Support</td>
-              <td>How often an itemset appears in the dataset</td>
-              <td>Replace with your value</td>
+              <td>MSE</td>
+              <td>Average squared error between predicted and actual values</td>
+              <td>0.302</td>
             </tr>
             <tr>
-              <td>Confidence</td>
-              <td>How often rule B occurs when A occurs</td>
-              <td>Replace with your value</td>
+              <td>RMSE</td>
+              <td>Standard deviation of prediction errors (in original units)</td>
+              <td>0.550</td>
             </tr>
             <tr>
-              <td>Lift</td>
-              <td>Strength of association beyond random chance</td>
-              <td>Replace with your value</td>
+              <td>R² Score</td>
+              <td>Proportion of variance explained by the model</td>
+              <td>0.990</td>
             </tr>
           </tbody>
         </table>
